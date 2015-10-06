@@ -254,7 +254,7 @@ page_init(void)
 	size_t i;
     size_t st = PDX(IOPHYSMEM);
     size_t en = PDX(boot_alloc(0));
-    cprintf("====##%u %u\n$$====",st,en);
+    cprintf("====##$$====");
 	for (i = 0; i < npages; i++) {
         if (st <= i && i<= en) continue;
 		pages[i].pp_ref = 0;
