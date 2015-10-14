@@ -10,6 +10,7 @@
 #include <kern/console.h>
 #include <kern/monitor.h>
 #include <kern/kdebug.h>
+#include <kern/pmap.h>
 
 #define CMDBUF_SIZE	80	// enough for one VGA text line
 
@@ -24,6 +25,9 @@ struct Command {
 static struct Command commands[] = {
 	{ "help", "Display this list of commands", mon_help },
 	{ "kerninfo", "Display information about the kernel", mon_kerninfo },
+    { "showmappings", "Display the corresponding physical page address of an interver", mon_showmappings},
+    { "setperm", "Set the permission bit of a page table of a virtual address", mon_setperm},
+    { "dumpvm", "Dump contents from start to end of virtual address", mon_dumpvm}
 };
 #define NCOMMANDS (sizeof(commands)/sizeof(commands[0]))
 
@@ -55,6 +59,92 @@ mon_kerninfo(int argc, char **argv, struct Trapframe *tf)
 	return 0;
 }
 
+
+uint32_t get_num(char* str);
+
+int 
+mon_setperm(int argc, char**argv, struct Trapframe *tf)
+{
+    if (argc != 4)
+    {
+            cprintf("Usage: setperm va [p/t/w] [0/1]\n");
+            return 0;
+    }
+    uint32_t va = get_num(argv[1]);
+    pte_t* pte = pgdir_walk(kern_pgdir, (const void*)va, 0);
+    char bit = *argv[2];
+    int perm = *argv[3]-'0';
+    if (pte == NULL)
+    {
+            cprintf("Address %x havn't been mapped yet.\n", va);
+            return 0;
+    }
+    switch (bit)
+    {
+            case 'p' : if (perm) *pte = *pte | PTE_P; else *pte = *pte & ~ PTE_P; break;
+            case 'w' : if (perm) *pte = *pte | PTE_W; else *pte = *pte & ~ PTE_W; break;
+            case 'u' : if (perm) *pte = *pte | PTE_U; else *pte = *pte & ~ PTE_U; break;
+    }
+    return 0;
+}
+
+int
+mon_dumpvm(int argc, char**argv, struct Trapframe *tf)
+{
+    if (argc != 3)
+    {
+            cprintf("Usage: dumpvm st en\n");
+            return 0;
+    }
+    void** st = (void**) get_num(argv[1]);
+    void** en = (void**) get_num(argv[2]);
+    void** ptr = st;
+    while (ptr <= en) 
+    {
+            cprintf("%x : %x\n", ptr, *ptr);
+            ++ptr;
+    }
+    return 0;
+}
+
+int
+mon_showmappings(int argc, char **argv, struct Trapframe *tf)
+{
+   if (argc != 3)
+   {
+           cprintf("Usage: shwmappings st_va en_va\n");
+           return 0;
+   }
+   uint32_t st,en,va;
+   pte_t *pte;
+   va = st = get_num(argv[1]);
+   en = get_num(argv[2]);
+   while (va <= en)
+   {
+        pte = pgdir_walk(kern_pgdir, (const void*)va, 0);
+        if (pte == NULL)
+                cprintf("virtual page address %x maps to NULL\n", va);
+        else
+                cprintf("virtual page address %x maps to %x, PTE_W %x, PTE_P %x, PTE_U %x\n",
+                                va, PTE_ADDR(*pte), *pte & PTE_W, *pte & PTE_P, *pte & PTE_U);
+        va += PGSIZE;
+   }
+   return 0;
+}
+
+uint32_t
+get_num(char* str)
+{
+    char* now = str + 2; // jump over 0x
+    uint32_t res = 0;
+    while (*now)
+    {
+            if ('0' <= *now && *now <='9') res = res * 16 + (*now - '0');
+            else res = res * 16 + (*now - 'a' + 10);
+            ++now;
+    }
+    return res;
+}
 int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
