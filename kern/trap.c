@@ -65,6 +65,37 @@ trap_init(void)
 	extern struct Segdesc gdt[];
 
 	// LAB 3: Your code here.
+	void routine_divde();
+	void routine_debug();
+	void routine_nmi();
+	void routine_brkpt();
+	void routine_oflow();
+	void routine_bound();
+	void routine_illop();
+	void routine_device();
+	void routine_dblft();
+	void routine_tss();
+	void routine_segnp();
+	void routine_stack();
+	void routine_gpflt();
+	void routine_pgflt();
+	void routine_fperr();  
+
+	SETGATE(idt[0], 0, GD_KT, routine_divde, 0);
+	SETGATE(idt[1], 0, GD_KT, routine_debug, 0);
+	SETGATE(idt[2], 0, GD_KT, routine_nmi, 0);
+	SETGATE(idt[3], 0, GD_KT, routine_brkpt, 0);
+	SETGATE(idt[4], 0, GD_KT, routine_oflow, 0);
+	SETGATE(idt[5], 0, GD_KT, routine_bound, 0);
+	SETGATE(idt[6], 0, GD_KT, routine_illop, 0);
+	SETGATE(idt[7], 0, GD_KT, routine_device, 0);
+	SETGATE(idt[8], 0, GD_KT, routine_dblft, 0);
+	SETGATE(idt[10], 0, GD_KT, routine_tss, 0);
+	SETGATE(idt[11], 0, GD_KT, routine_segnp, 0);
+	SETGATE(idt[12], 0, GD_KT, routine_stack, 0);
+	SETGATE(idt[13], 0, GD_KT, routine_gpflt, 0);
+	SETGATE(idt[14], 0, GD_KT, routine_pgflt, 0);
+	SETGATE(idt[16], 0, GD_KT, routine_fperr, 0);  
 
 	// Per-CPU setup 
 	trap_init_percpu();
@@ -102,6 +133,7 @@ print_trapframe(struct Trapframe *tf)
 	cprintf("  trap 0x%08x %s\n", tf->tf_trapno, trapname(tf->tf_trapno));
 	// If this trap was a page fault that just happened
 	// (so %cr2 is meaningful), print the faulting linear address.
+    cprintf("+++++++++errno: %d\n",tf->tf_trapno);
 	if (tf == last_tf && tf->tf_trapno == T_PGFLT)
 		cprintf("  cr2  0x%08x\n", rcr2());
 	cprintf("  err  0x%08x", tf->tf_err);
@@ -143,7 +175,6 @@ trap_dispatch(struct Trapframe *tf)
 {
 	// Handle processor exceptions.
 	// LAB 3: Your code here.
-
 	// Unexpected trap: The user process or the kernel has a bug.
 	print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)

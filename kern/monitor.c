@@ -221,7 +221,7 @@ monitor(struct Trapframe *tf)
 {
 	char *buf;
 	unsigned int i = 0x00646c72;
-	cprintf("H%x Wo%s", 57616, &i);
+	cprintf("H%x Wo%s\n", 57616, &i);
 
 	cprintf("Welcome to the JOS kernel monitor!\n");
 	cprintf("Type 'help' for a list of commands.\n");

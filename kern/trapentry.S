@@ -46,10 +46,32 @@
 /*
  * Lab 3: Your code here for generating entry points for the different traps.
  */
-
-
+	TRAPHANDLER_NOEC(routine_divde,T_DIVIDE)    // 0		 divide error
+	TRAPHANDLER_NOEC(routine_debug,T_DEBUG)     // 1		 debug exception
+	TRAPHANDLER_NOEC(routine_nmi,T_NMI)      // 2		 non-maskable interrupt
+	TRAPHANDLER_NOEC(routine_brkpt,T_BRKPT)     // 3		 breakpoint
+	TRAPHANDLER_NOEC(routine_oflow,T_OFLOW)     // 4		 overflow
+	TRAPHANDLER_NOEC(routine_bound,T_BOUND)     // 5		 bounds check
+	TRAPHANDLER_NOEC(routine_illop,T_ILLOP)     // 6		 illegal opcode
+	TRAPHANDLER_NOEC(routine_device,T_DEVICE)    // 7		 device not available
+	TRAPHANDLER(routine_dblft,T_DBLFLT)         // 8		 double fault
+	TRAPHANDLER(routine_tss,T_TSS)           //10		 invalid task switch segment
+	TRAPHANDLER(routine_segnp,T_SEGNP)          //11		 segment not present
+	TRAPHANDLER(routine_stack,T_STACK)          //12		 stack exception
+	TRAPHANDLER(routine_gpflt,T_GPFLT)          //13		 general protection fault
+	TRAPHANDLER(routine_pgflt,T_PGFLT)          //14		 page fault
+    TRAPHANDLER_NOEC(routine_fperr,T_FPERR)     //16		 floating point error
 
 /*
  * Lab 3: Your code here for _alltraps
  */
-
+_alltraps:
+    pushl %ds;
+    pushl %es;
+    pushal;
+    pushl $GD_KD;
+    popl %ds;
+    pushl $GD_KD;
+    popl %es;
+    pushl %esp;
+    call trap;
