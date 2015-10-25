@@ -65,7 +65,7 @@ trap_init(void)
 	extern struct Segdesc gdt[];
 
 	// LAB 3: Your code here.
-	void routine_divde();
+/*	void routine_divde();
 	void routine_debug();
 	void routine_nmi();
 	void routine_brkpt();
@@ -97,7 +97,22 @@ trap_init(void)
 	SETGATE(idt[14], 0, GD_KT, routine_pgflt, 0);
 	SETGATE(idt[16], 0, GD_KT, routine_fperr, 0);  
     SETGATE(idt[48], 0, GD_KT, routine_syscall, 3);
-	// Per-CPU setup 
+*/
+    //Challenge
+	extern void (*funs[])();
+	int i =0 ;
+	while (i <=16)
+    {
+		if (i==T_BRKPT)
+			SETGATE(idt[i], 0, GD_KT, funs[i], 3)
+		else if (i!=2 && i!=15) {
+			SETGATE(idt[i], 0, GD_KT, funs[i], 0);
+		}
+        ++i;
+    }
+	SETGATE(idt[48], 0, GD_KT, funs[48], 3);
+                            SETGATE(idt[48], 0, GD_KT, funs[48], 3);
+    // Per-CPU setup 
 	trap_init_percpu();
 }
 
