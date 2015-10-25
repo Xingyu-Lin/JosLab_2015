@@ -28,7 +28,8 @@ static struct Command commands[] = {
 	{ "kerninfo", "Display information about the kernel", mon_kerninfo },
     { "showmappings", "Display the corresponding physical page address of an interver", mon_showmappings},
     { "setperm", "Set the permission bit of a page table of a virtual address", mon_setperm},
-    { "dumpvm", "Dump contents from start to end of virtual address", mon_dumpvm}
+    { "dumpvm", "Dump contents from start to end of virtual address", mon_dumpvm},
+	{ "debug_backtrace", "backtrace", debug_backtrace}
 };
 #define NCOMMANDS (sizeof(commands)/sizeof(commands[0]))
 
@@ -60,6 +61,29 @@ mon_kerninfo(int argc, char **argv, struct Trapframe *tf)
 	return 0;
 }
 
+
+int
+debug_backtrace(int argc, char **argv, struct Trapframe *tf)
+{
+	uint32_t* ebp = (uint32_t*) read_ebp();
+	cprintf("Stack backtrace:\n");
+	while (ebp) {
+		uint32_t eip = ebp[1];
+		cprintf("ebp %x  eip %x  args", ebp, eip);
+		int i;
+		for (i = 2; i <= 6; ++i)
+			cprintf(" %08.x", ebp[i]);
+		cprintf("\n");
+		struct Eipdebuginfo info;
+		debuginfo_eip(eip, &info);
+		cprintf("\t%s:%d: %.*s+%d\n", 
+			info.eip_file, info.eip_line,
+			info.eip_fn_namelen, info.eip_fn_name,
+			eip-info.eip_fn_addr);
+		ebp = (uint32_t*) *ebp;
+	}
+	return 0;
+}
 
 uint32_t get_num(char* str);
 

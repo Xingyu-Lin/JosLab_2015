@@ -80,11 +80,11 @@ trap_init(void)
 	void routine_gpflt();
 	void routine_pgflt();
 	void routine_fperr();  
-
+    void routine_syscall();
 	SETGATE(idt[0], 0, GD_KT, routine_divde, 0);
 	SETGATE(idt[1], 0, GD_KT, routine_debug, 0);
 	SETGATE(idt[2], 0, GD_KT, routine_nmi, 0);
-	SETGATE(idt[3], 0, GD_KT, routine_brkpt, 0);
+	SETGATE(idt[3], 0, GD_KT, routine_brkpt, 3);
 	SETGATE(idt[4], 0, GD_KT, routine_oflow, 0);
 	SETGATE(idt[5], 0, GD_KT, routine_bound, 0);
 	SETGATE(idt[6], 0, GD_KT, routine_illop, 0);
@@ -96,7 +96,7 @@ trap_init(void)
 	SETGATE(idt[13], 0, GD_KT, routine_gpflt, 0);
 	SETGATE(idt[14], 0, GD_KT, routine_pgflt, 0);
 	SETGATE(idt[16], 0, GD_KT, routine_fperr, 0);  
-
+    SETGATE(idt[48], 0, GD_KT, routine_syscall, 3);
 	// Per-CPU setup 
 	trap_init_percpu();
 }
@@ -176,7 +176,24 @@ trap_dispatch(struct Trapframe *tf)
 	// Handle processor exceptions.
 	// LAB 3: Your code here.
 	// Unexpected trap: The user process or the kernel has a bug.
-	print_trapframe(tf);
+    
+    //Check for fault in kernel mode
+    if (tf->tf_cs == GD_KT && tf->tf_trapno == T_PGFLT)
+            panic("Page fault in kernel mode!\n");
+    if (tf->tf_trapno == T_SYSCALL) 
+    {
+            cprintf("SYSTEM CALL\n");
+            tf->tf_regs.reg_eax =  syscall(tf->tf_regs.reg_eax, 
+                                           tf->tf_regs.reg_edx, 
+                                           tf->tf_regs.reg_ecx,
+                                           tf->tf_regs.reg_ebx, 
+                                           tf->tf_regs.reg_edi, 
+                                           tf->tf_regs.reg_esi);
+            return;
+    }
+    if (tf->tf_trapno == T_PGFLT) page_fault_handler(tf);
+    if (tf->tf_trapno == T_BRKPT) monitor(tf);
+    print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)
 		panic("unhandled trap in kernel");
 	else {
@@ -235,7 +252,9 @@ page_fault_handler(struct Trapframe *tf)
 	// Handle kernel-mode page faults.
 
 	// LAB 3: Your code here.
-
+    /*PageInfo* pp = page_alloc(1);
+    if (page_insert(env->pgdir, pp, va, (PTE_U|PTE_W) )!=0) panic("Not enough memeory!");
+    else env_run(curenv);*/
 	// We've already handled kernel-mode exceptions, so if we get here,
 	// the page fault happened in user mode.
 
