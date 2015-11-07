@@ -219,6 +219,9 @@ print_regs(struct PushRegs *regs)
 static void
 trap_dispatch(struct Trapframe *tf)
 {
+	//cprintf("[%08x] user fault va %08x ip %08x\n",
+	//	curenv->env_id, fault_va, tf->tf_eip);
+    //cprintf("now:%x\n",tf->tf_cs);
 	// Handle processor exceptions.
 	// LAB 3: Your code here.
 
@@ -238,8 +241,6 @@ trap_dispatch(struct Trapframe *tf)
 	// Unexpected trap: The user process or the kernel has a bug.
     
     //Check for fault in kernel mode
-    if (tf->tf_cs == GD_KT && tf->tf_trapno == T_PGFLT)
-            panic("Page fault in kernel mode!\n");
     if (tf->tf_trapno == T_SYSCALL) 
     {
             tf->tf_regs.reg_eax =  syscall(tf->tf_regs.reg_eax, 
@@ -251,7 +252,7 @@ trap_dispatch(struct Trapframe *tf)
             return;
     }
     if (tf->tf_trapno == T_PGFLT) page_fault_handler(tf);
-    if (tf->tf_trapno == T_BRKPT) monitor(tf);
+    if (tf->tf_trapno == T_BRKPT) monitor(tf);        
     print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)
 		panic("unhandled trap in kernel");
@@ -331,12 +332,9 @@ page_fault_handler(struct Trapframe *tf)
 	fault_va = rcr2();
 
 	// Handle kernel-mode page faults.
-
 	// LAB 3: Your code here.
-    /*PageInfo* pp = page_alloc(1);
-    if (page_insert(env->pgdir, pp, va, (PTE_U|PTE_W) )!=0) panic("Not enough memeory!");
-    else env_run(curenv);*/
-	// We've already handled kernel-mode exceptions, so if we get here,
+	if ((tf->tf_cs &3) ==0) panic("Kernel page fault!\n");
+    // We've already handled kernel-mode exceptions, so if we get here,
 	// the page fault happened in user mode.
 
 	// Call the environment's page fault upcall, if one exists.  Set up a
@@ -368,7 +366,25 @@ page_fault_handler(struct Trapframe *tf)
 	//   (the 'tf' variable points at 'curenv->env_tf').
 
 	// LAB 4: Your code here.
-
+    if (curenv->env_pgfault_upcall !=NULL)
+    {
+            struct UTrapframe *utf = 
+                    (struct UTrapframe*) (UXSTACKTOP - sizeof(struct UTrapframe));
+            if (UXSTACKTOP - PGSIZE <= tf->tf_esp 
+                            && tf->tf_esp < UXSTACKTOP) //fault in handler
+                utf=(struct UTrapframe*) (tf->tf_esp - sizeof(struct UTrapframe) - 4);
+            
+            user_mem_assert(curenv, (void*)utf, sizeof(struct UTrapframe), PTE_W|PTE_U);
+            utf->utf_fault_va = fault_va;
+            utf->utf_err = tf->tf_err;
+            utf->utf_regs = tf->tf_regs;
+            utf->utf_eip = tf->tf_eip;
+            utf->utf_eflags = tf->tf_eflags;
+            utf->utf_esp = tf->tf_esp;
+            curenv->env_tf.tf_eip = (int) curenv->env_pgfault_upcall;
+            curenv->env_tf.tf_esp = (int) utf;
+            env_run(curenv);
+    }
 	// Destroy the environment that caused the fault.
 	cprintf("[%08x] user fault va %08x ip %08x\n",
 		curenv->env_id, fault_va, tf->tf_eip);
