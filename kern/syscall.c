@@ -291,7 +291,12 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
     struct Env* e;
     int r;
     if ((r = envid2env(envid, &e, 0)) <0) return -E_BAD_ENV;
-    if (!e->env_ipc_recving) return -E_IPC_NOT_RECV; // check if the target env is blocked
+    if (!e->env_ipc_recving) 
+    {
+            e->env_wait[e->env_wait_cnt++] = curenv;
+            curenv -> env_status = ENV_NOT_RUNNABLE;
+            return -E_IPC_NOT_RECV; // check if the target env is blocked
+    }
     if ((int) srcva < UTOP && ROUNDDOWN(srcva, PGSIZE)!=srcva ) return -E_INVAL;
     if ((int) srcva < UTOP)
     {
@@ -313,7 +318,6 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 
     e->env_ipc_from = curenv->env_id;
     e->env_ipc_value = value;
-//    e->env_wait[e->env_wait_cnt++] = curenv;
     e->env_status = ENV_RUNNABLE;
     e->env_ipc_recving = 0;
     e->env_tf.tf_regs.reg_eax = 0;
@@ -340,8 +344,8 @@ sys_ipc_recv(void *dstva)
     curenv->env_ipc_recving =1;
     curenv->env_ipc_from =0;
     curenv->env_status = ENV_NOT_RUNNABLE;
-//    if (curenv->env_wait_cnt > 0)
-//	    curenv->env_wait[--curenv->env_wait_cnt]->env_status = ENV_RUNNABLE;
+    if (curenv->env_wait_cnt > 0)
+	    curenv->env_wait[--curenv->env_wait_cnt]->env_status = ENV_RUNNABLE;
     return 0;
 }
 

@@ -56,9 +56,14 @@ ipc_send(envid_t to_env, uint32_t val, void *pg, int perm)
 	// LAB 4: Your code here.
     int r;
     if (pg ==NULL) pg = (void*) UTOP;
-    while ( (r = sys_ipc_try_send(to_env, val, pg, perm))<0 )
+    r = sys_ipc_try_send(to_env, val, pg, perm);
+    if (r<0)
     {
-            if (r == -E_IPC_NOT_RECV) sys_yield();
+            if (r == -E_IPC_NOT_RECV) 
+            {
+                    sys_yield();
+                    sys_ipc_try_send(to_env, val, pg, perm);
+            }
                 else panic("error while sending message");
     }
 

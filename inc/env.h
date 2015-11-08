@@ -44,8 +44,6 @@ enum EnvType {
 };
 
 struct Env {
-//    struct Env* env_wait[NENV];
-    int env_wait_cnt;
 	struct Trapframe env_tf;	// Saved registers
 	struct Env *env_link;		// Next free Env
 	envid_t env_id;			// Unique environment identifier
@@ -67,6 +65,8 @@ struct Env {
 	uint32_t env_ipc_value;		// Data value sent to us
 	envid_t env_ipc_from;		// envid of the sender
 	int env_ipc_perm;		// Perm of page mapping received
+    struct Env* env_wait[20];
+    int env_wait_cnt;
 };
 
 #endif // !JOS_INC_ENV_H
