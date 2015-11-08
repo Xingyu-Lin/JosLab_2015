@@ -313,6 +313,7 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 
     e->env_ipc_from = curenv->env_id;
     e->env_ipc_value = value;
+//    e->env_wait[e->env_wait_cnt++] = curenv;
     e->env_status = ENV_RUNNABLE;
     e->env_ipc_recving = 0;
     e->env_tf.tf_regs.reg_eax = 0;
@@ -339,7 +340,9 @@ sys_ipc_recv(void *dstva)
     curenv->env_ipc_recving =1;
     curenv->env_ipc_from =0;
     curenv->env_status = ENV_NOT_RUNNABLE;
-	return 0;
+//    if (curenv->env_wait_cnt > 0)
+//	    curenv->env_wait[--curenv->env_wait_cnt]->env_status = ENV_RUNNABLE;
+    return 0;
 }
 
 // Dispatches to the correct kernel function, passing the arguments.

@@ -43,7 +43,7 @@ mpentry_start:
 	movw    %ax, %es
 	movw    %ax, %ss
 
-	lgdt    MPBOOTPHYS(gdtdesc)
+    lgdt    MPBOOTPHYS(gdtdesc)
 	movl    %cr0, %eax
 	orl     $CR0_PE, %eax
 	movl    %eax, %cr0

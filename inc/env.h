@@ -35,7 +35,7 @@ enum {
 	ENV_DYING,
 	ENV_RUNNABLE,
 	ENV_RUNNING,
-	ENV_NOT_RUNNABLE
+	ENV_NOT_RUNNABLE//    ENV_WAITING
 };
 
 // Special environment types
@@ -44,6 +44,8 @@ enum EnvType {
 };
 
 struct Env {
+//    struct Env* env_wait[NENV];
+    int env_wait_cnt;
 	struct Trapframe env_tf;	// Saved registers
 	struct Env *env_link;		// Next free Env
 	envid_t env_id;			// Unique environment identifier
