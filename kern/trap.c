@@ -70,7 +70,38 @@ void
 trap_init(void)
 {
 	extern struct Segdesc gdt[];
-
+extern void intr_irq0();
+extern void intr_irq1();
+extern void intr_irq2();
+extern void intr_irq3();
+extern void intr_irq4();
+extern void intr_irq5();
+extern void intr_irq6();
+extern void intr_irq7();
+extern void intr_irq8();
+extern void intr_irq9();
+extern void intr_irq10();
+extern void intr_irq11();
+extern void intr_irq12();
+extern void intr_irq13();
+extern void intr_irq14();
+extern void intr_irq15();
+SETGATE( idt[IRQ_OFFSET + 0], 0, GD_KT, intr_irq0, 0);
+SETGATE( idt[IRQ_OFFSET + 1], 0, GD_KT, intr_irq1, 0);
+SETGATE( idt[IRQ_OFFSET + 2], 0, GD_KT, intr_irq2, 0);
+SETGATE( idt[IRQ_OFFSET + 3], 0, GD_KT, intr_irq3, 0);
+SETGATE( idt[IRQ_OFFSET + 4], 0, GD_KT, intr_irq4, 0);
+SETGATE( idt[IRQ_OFFSET + 5], 0, GD_KT, intr_irq5, 0);
+SETGATE( idt[IRQ_OFFSET + 6], 0, GD_KT, intr_irq6, 0);
+SETGATE( idt[IRQ_OFFSET + 7], 0, GD_KT, intr_irq7, 0); 
+SETGATE( idt[IRQ_OFFSET + 8], 0, GD_KT, intr_irq8, 0);
+SETGATE( idt[IRQ_OFFSET + 9], 0, GD_KT, intr_irq9, 0);
+SETGATE( idt[IRQ_OFFSET + 10], 0, GD_KT, intr_irq10, 0);
+SETGATE( idt[IRQ_OFFSET + 11], 0, GD_KT, intr_irq11, 0);
+SETGATE( idt[IRQ_OFFSET + 12], 0, GD_KT, intr_irq12, 0);
+SETGATE( idt[IRQ_OFFSET + 13], 0, GD_KT, intr_irq13, 0);
+SETGATE( idt[IRQ_OFFSET + 14], 0, GD_KT, intr_irq14, 0);
+SETGATE( idt[IRQ_OFFSET + 15], 1, GD_KT, intr_irq15, 0);
 	// LAB 3: Your code here.
 /*	void routine_divde();
 	void routine_debug();
@@ -237,7 +268,12 @@ trap_dispatch(struct Trapframe *tf)
 	// Handle clock interrupts. Don't forget to acknowledge the
 	// interrupt using lapic_eoi() before calling the scheduler!
 	// LAB 4: Your code here.
-
+    if (tf->tf_trapno == IRQ_OFFSET+IRQ_TIMER)
+    {
+            lapic_eoi();
+            sched_yield();
+            return;
+    }
 	// Unexpected trap: The user process or the kernel has a bug.
     
     //Check for fault in kernel mode

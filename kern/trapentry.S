@@ -62,7 +62,7 @@ funs:
 /*
  * Lab 3: Your code here for generating entry points for the different traps.
  */
-	TRAPHANDLER_NOEC(routine_divde,T_DIVIDE)    // 0		 divide error
+   TRAPHANDLER_NOEC(routine_divde,T_DIVIDE)    // 0		 divide error
 	TRAPHANDLER_NOEC(routine_debug,T_DEBUG)     // 1		 debug exception
 	TRAPHANDLER_NOEC(routine_nmi,T_NMI)      // 2		 non-maskable interrupt
 	TRAPHANDLER_NOEC(routine_brkpt,T_BRKPT)     // 3		 breakpoint
@@ -78,11 +78,27 @@ funs:
 	TRAPHANDLER(routine_gpflt,T_GPFLT)          //13		 general protection fault
 	TRAPHANDLER(routine_pgflt,T_PGFLT)          //14		 page fault
     FUNPADDING
-    TRAPHANDLER_NOEC(routine_fperr,T_FPERR)     //16		 floating point error
-    .data           // padding
+   TRAPHANDLER_NOEC(routine_fperr,T_FPERR)     //16		 floating point error
+   .data           // padding
         .space 124
 .text
     TRAPHANDLER_NOEC(routine_syscall,T_SYSCALL)    //48         syscall
+     TRAPHANDLER_NOEC(intr_irq0, IRQ_OFFSET + 0);
+     TRAPHANDLER_NOEC(intr_irq1, IRQ_OFFSET + 1);
+     TRAPHANDLER_NOEC(intr_irq2, IRQ_OFFSET + 2);
+     TRAPHANDLER_NOEC(intr_irq3, IRQ_OFFSET + 3);
+     TRAPHANDLER_NOEC(intr_irq4, IRQ_OFFSET + 4);
+     TRAPHANDLER_NOEC(intr_irq5, IRQ_OFFSET + 5);
+     TRAPHANDLER_NOEC(intr_irq6, IRQ_OFFSET + 6);
+     TRAPHANDLER_NOEC(intr_irq7, IRQ_OFFSET + 7);
+     TRAPHANDLER_NOEC(intr_irq8, IRQ_OFFSET + 8);
+     TRAPHANDLER_NOEC(intr_irq9, IRQ_OFFSET + 9);
+     TRAPHANDLER_NOEC(intr_irq10, IRQ_OFFSET + 10);
+     TRAPHANDLER_NOEC(intr_irq11, IRQ_OFFSET + 11);
+     TRAPHANDLER_NOEC(intr_irq12, IRQ_OFFSET + 12);
+     TRAPHANDLER_NOEC(intr_irq13, IRQ_OFFSET + 13);
+     TRAPHANDLER_NOEC(intr_irq14, IRQ_OFFSET + 14);
+     TRAPHANDLER_NOEC(intr_irq15, IRQ_OFFSET + 15);
 /*
  * Lab 3: Your code here for _alltraps
  */
