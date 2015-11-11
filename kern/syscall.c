@@ -367,10 +367,6 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 
     int ret=0;
 	switch (syscallno) {
-<<<<<<< HEAD
-	default:
-		return -E_INVAL;
-=======
     case SYS_cputs:
         sys_cputs((char*)a1, a2);
         break;
@@ -411,7 +407,7 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
         ret = sys_ipc_recv((void*) a1);
         break;
     default:
-		return -E_NO_SYS;
+		return -E_INVAL;
 	}
     return ret;
 }
