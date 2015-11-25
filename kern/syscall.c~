@@ -4,7 +4,6 @@
 #include <inc/error.h>
 #include <inc/string.h>
 #include <inc/assert.h>
-#include <inc/elf.h>
 
 #include <kern/env.h>
 #include <kern/pmap.h>
@@ -13,7 +12,6 @@
 #include <kern/console.h>
 #include <kern/sched.h>
 
-#define ETEMP 0xe000000
 // Print a string to the system console.
 // The string is exactly 'len' characters long.
 // Destroys the environment on memory errors.
@@ -314,12 +312,7 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
     struct Env* e;
     int r;
     if ((r = envid2env(envid, &e, 0)) <0) return -E_BAD_ENV;
-    if (!e->env_ipc_recving) 
-    {
-            e->env_wait[e->env_wait_cnt++] = curenv;
-            curenv -> env_status = ENV_NOT_RUNNABLE;
-            return -E_IPC_NOT_RECV; // check if the target env is blocked
-    }
+    if (!e->env_ipc_recving) return -E_IPC_NOT_RECV; // check if the target env is blocked
     if ((int) srcva < UTOP && ROUNDDOWN(srcva, PGSIZE)!=srcva ) return -E_INVAL;
     if ((int) srcva < UTOP)
     {
@@ -341,6 +334,7 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 
     e->env_ipc_from = curenv->env_id;
     e->env_ipc_value = value;
+//    e->env_wait[e->env_wait_cnt++] = curenv;
     e->env_status = ENV_RUNNABLE;
     e->env_ipc_recving = 0;
     e->env_tf.tf_regs.reg_eax = 0;
@@ -367,49 +361,8 @@ sys_ipc_recv(void *dstva)
     curenv->env_ipc_recving =1;
     curenv->env_ipc_from =0;
     curenv->env_status = ENV_NOT_RUNNABLE;
-    if (curenv->env_wait_cnt > 0)
-	    curenv->env_wait[--curenv->env_wait_cnt]->env_status = ENV_RUNNABLE;
-    return 0;
-}
-
-//syscall to load a new program as unix-exec
-static int
-sys_exec(uint32_t eip, uint32_t esp, void * v_ph, uint32_t phnum)
-{
-        
-	curenv->env_tf.tf_eip = eip;
-	curenv->env_tf.tf_esp = esp;
-
-	int perm, i;
-	uint32_t tmp = ETEMP;
-	uint32_t va, end;
-	struct PageInfo * pg;
-
-	struct Proghdr * ph = (struct Proghdr *) v_ph; 
-	for (i = 0; i < phnum; i++, ph++) {
-		if (ph->p_type != ELF_PROG_LOAD)
-			continue;
-		perm = PTE_P | PTE_U;
-		if (ph->p_flags & ELF_PROG_FLAG_WRITE)
-			perm |= PTE_W;
-
-		end = ROUNDUP(ph->p_va + ph->p_memsz, PGSIZE);
-		for (va = ROUNDDOWN(ph->p_va, PGSIZE); va != end; tmp += PGSIZE, va += PGSIZE) {
-			if ((pg = page_lookup(curenv->env_pgdir, (void *)tmp, NULL)) == NULL) 
-				return -E_NO_MEM;
-			if (page_insert(curenv->env_pgdir, pg, (void *)va, perm) < 0)
-				return -E_NO_MEM;
-			page_remove(curenv->env_pgdir, (void *)tmp);
-		}
-	}
-
-	if ((pg = page_lookup(curenv->env_pgdir, (void *)tmp, NULL)) == NULL) 
-		return -E_NO_MEM;
-	if (page_insert(curenv->env_pgdir, pg, (void *)(USTACKTOP - PGSIZE), PTE_P|PTE_U|PTE_W) < 0) 
-		return -E_NO_MEM;
-	page_remove(curenv->env_pgdir, (void *)tmp);
-	
-	env_run(curenv);// never return
+//    if (curenv->env_wait_cnt > 0)
+//	    curenv->env_wait[--curenv->env_wait_cnt]->env_status = ENV_RUNNABLE;
     return 0;
 }
 
@@ -465,9 +418,6 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
     case SYS_env_set_trapframe:
         ret = sys_env_set_trapframe((envid_t) a1, (struct Trapframe*)a2);
         break;
-    case SYS_exec:
-	ret = sys_exec((uint32_t)a1, (uint32_t)a2, (void *)a3, (uint32_t)a4);
-	break;
     default:
 		return -E_INVAL;
 	}
