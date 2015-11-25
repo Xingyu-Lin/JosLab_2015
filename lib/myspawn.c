@@ -6,12 +6,13 @@
 #define UTEMP3			(UTEMP2 + PGSIZE)
 #define ETEMP   0xe000000
 // Helper functions for spawn.
-extern int sys_exec(uint32_t eip, uint32_t esp, void * ph, uint32_t phnum);
-
 static int init_stack(envid_t child, const char **argv, uintptr_t *init_esp, uint32_t stack_addr);
+
 static int map_segment(envid_t child, uintptr_t va, size_t memsz,
 		       int fd, size_t filesz, off_t fileoffset, int perm);
 static int copy_shared_pages(envid_t child);
+
+extern int sys_exec(uint32_t eip, uint32_t esp, void * ph, uint32_t phnum);
 
 // Spawn a child process from a program image loaded from the file system.
 // prog: the pathname of the program to run.
@@ -100,7 +101,6 @@ spawn(const char *prog, const char **argv)
 		return -E_NOT_EXEC;
 	}
 
-
 	// Create new child environment
 	if ((r = sys_exofork()) < 0)
 		return r;
@@ -110,7 +110,7 @@ spawn(const char *prog, const char **argv)
 	child_tf = envs[ENVX(child)].env_tf;
 	child_tf.tf_eip = elf->e_entry;
 
-	if ((r = init_stack(child, argv, &child_tf.tf_esp, (USTACKTOP - PGSIZE))) < 0)
+	if ((r = init_stack(child, argv, &child_tf.tf_esp, USTACKTOP-PGSIZE)) < 0)
 		return r;
 
 	// Set up program segments as defined in ELF header.
@@ -146,6 +146,38 @@ error:
 	return r;
 }
 
+// Spawn, taking command-line arguments array directly on the stack.
+// NOTE: Must have a sentinal of NULL at the end of the args
+// (none of the args may be NULL).
+int
+spawnl(const char *prog, const char *arg0, ...)
+{
+	// We calculate argc by advancing the args until we hit NULL.
+	// The contract of the function guarantees that the last
+	// argument will always be NULL, and that none of the other
+	// arguments will be NULL.
+	int argc=0;
+	va_list vl;
+	va_start(vl, arg0);
+	while(va_arg(vl, void *) != NULL)
+		argc++;
+	va_end(vl);
+
+	// Now that we have the size of the args, do a second pass
+	// and store the values in a VLA, which has the format of argv
+	const char *argv[argc+2];
+	argv[0] = arg0;
+	argv[argc+1] = NULL;
+
+	va_start(vl, arg0);
+	unsigned i;
+	for(i=0;i<argc;i++)
+		argv[i+1] = va_arg(vl, const char *);
+	va_end(vl);
+	return spawn(prog, argv);
+}
+
+// load program and run in the current environment
 int
 exec(const char *prog, const char **argv)
 {
@@ -171,7 +203,6 @@ exec(const char *prog, const char **argv)
 		return -E_NOT_EXEC;
 	}
 
-
 	// Set up program segments as defined in ELF header.
 	uint32_t tmp = ETEMP;
 	ph = (struct Proghdr*) (elf_buf + elf->e_phoff);
@@ -190,7 +221,6 @@ exec(const char *prog, const char **argv)
 	fd = -1;
 
 	cprintf("tf_esp: %x\n", tf_esp);
-	// cprintf("tf_eip: %x\n", tf_eip);
 	if ((r = init_stack(0, argv, &tf_esp, tmp)) < 0)
 		return r;
 
@@ -200,6 +230,8 @@ exec(const char *prog, const char **argv)
 	return 0;
 
 error:
+    cprintf("error in exec!\n");
+    cprintf("%d\n", r);
 	sys_env_destroy(0);
 	close(fd);
 	return r;
@@ -233,34 +265,6 @@ execl(const char *prog, const char *arg0, ...)
 	return exec(prog, argv);
 }
 
-int
-spawnl(const char *prog, const char *arg0, ...)
-{
-	// We calculate argc by advancing the args until we hit NULL.
-	// The contract of the function guarantees that the last
-	// argument will always be NULL, and that none of the other
-	// arguments will be NULL.
-	int argc=0;
-	va_list vl;
-	va_start(vl, arg0);
-	while(va_arg(vl, void *) != NULL)
-		argc++;
-	va_end(vl);
-
-	// Now that we have the size of the args, do a second pass
-	// and store the values in a VLA, which has the format of argv
-	const char *argv[argc+2];
-	argv[0] = arg0;
-	argv[argc+1] = NULL;
-
-	va_start(vl, arg0);
-	unsigned i;
-	for(i=0;i<argc;i++)
-		argv[i+1] = va_arg(vl, const char *);
-	va_end(vl);
-	return spawn(prog, argv);
-}
-
 
 // Set up the initial stack page for the new child process with envid 'child'
 // using the arguments array pointed to by 'argv',
@@ -270,7 +274,7 @@ spawnl(const char *prog, const char *arg0, ...)
 // to the initial stack pointer with which the child should start.
 // Returns < 0 on failure.
 static int
-init_stack(envid_t child, const char **argv, uintptr_t *init_esp, uint32_t stack)
+init_stack(envid_t child, const char **argv, uintptr_t *init_esp, uint32_t stack_addr)
 {
 	size_t string_size;
 	int argc, i, r;
@@ -334,12 +338,11 @@ init_stack(envid_t child, const char **argv, uintptr_t *init_esp, uint32_t stack
 
 	// After completing the stack, map it into the child's address space
 	// and unmap it from ours!
-	
-	cprintf("stack: %x\n", stack);
-	if ((r = sys_page_map(0, UTEMP, child, (void*) stack, PTE_P | PTE_U | PTE_W)) < 0)
+	if ((r = sys_page_map(0, UTEMP, child, (void*) stack_addr, PTE_P | PTE_U | PTE_W)) < 0)
 		goto error;
 	if ((r = sys_page_unmap(0, UTEMP)) < 0)
 		goto error;
+
 	return 0;
 
 error:
@@ -389,13 +392,16 @@ static int
 copy_shared_pages(envid_t child)
 {
 	// LAB 5: Your code here.
-    uint32_t i;
-    int r;
-    for (i = 0; i != UTOP; i += PGSIZE) 
-    if ((uvpd[PDX(i)] & PTE_P) && (uvpt[i / PGSIZE] & PTE_P) && (uvpt[i / PGSIZE] & PTE_SHARE)) {
-        r = sys_page_map(0, (void *)i, child, (void *)i, uvpt[i / PGSIZE] & PTE_SYSCALL);
-        if (r < 0) return r;
+    int addr;
+    for (addr = UTEXT; addr <UXSTACKTOP-PGSIZE; addr+=PGSIZE)
+    {
+            int pn = PGNUM(addr);
+            if (((uvpd[PDX(addr)] & PTE_P) >0) &&
+                ((uvpt[pn] & PTE_P) >0) &&
+                ((uvpt[pn] & PTE_U) >0) &&
+                ((uvpt[pn] & PTE_SHARE) >0))
+                    sys_page_map(0, (void*)addr, child, (void*)addr, uvpt[pn] & PTE_SYSCALL);
     }
-	return 0;
+    return 0;
 }
 
