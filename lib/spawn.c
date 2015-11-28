@@ -389,12 +389,15 @@ static int
 copy_shared_pages(envid_t child)
 {
 	// LAB 5: Your code here.
-    uint32_t i;
-    int r;
-    for (i = 0; i != UTOP; i += PGSIZE) 
-    if ((uvpd[PDX(i)] & PTE_P) && (uvpt[i / PGSIZE] & PTE_P) && (uvpt[i / PGSIZE] & PTE_SHARE)) {
-        r = sys_page_map(0, (void *)i, child, (void *)i, uvpt[i / PGSIZE] & PTE_SYSCALL);
-        if (r < 0) return r;
+    int addr;
+    for (addr = UTEXT; addr <UXSTACKTOP-PGSIZE; addr+=PGSIZE)
+    {
+            int pn = PGNUM(addr);
+            if (((uvpd[PDX(addr)] & PTE_P) >0) &&
+                ((uvpt[pn] & PTE_P) >0) &&
+                ((uvpt[pn] & PTE_U) >0) &&
+                ((uvpt[pn] & PTE_SHARE) >0))
+                    sys_page_map(0, (void*)addr, child, (void*)addr, uvpt[pn] & PTE_SYSCALL);
     }
 	return 0;
 }
