@@ -102,27 +102,27 @@ bc_pgfault(struct UTrapframe *utf)
     addr = ROUNDDOWN(addr, PGSIZE);
     update_blk_count();
     update_time_stamp();
-    //print_block_list();
+    print_block_list();
     if (curr_disk_size == MAXFILECACHE) //no memory for disk mapping, have to evict
     {
             uint32_t i, min_blk = 0, min_count = 0xffffffff;
             for (i=0; i<MAXBLK; ++i)
-            if (plist[i].valid && plist[i].count<min_count && i!=1) 
+            if (plist[i].valid && plist[i].tstamp<min_count && i!=1) 
             //use LRU policy to evict a block
             {
                     assert(i!=blockno);
                     min_blk = i;
-                    min_count = plist[i].count;
+                    min_count = plist[i].tstamp;
             }
+            cprintf("evict block at %x, used %d times, last used at time %x, load block at %x\n",
+                            diskaddr(min_blk), plist[min_blk].count, plist[min_blk].tstamp, addr);
             flush_block(diskaddr(min_blk));
             curr_disk_size -=PGSIZE;
             plist[min_blk].valid =0;
             sys_page_unmap(0, diskaddr(min_blk));
-      //      cprintf("evict block at %x, used %d times, last used at time %x, load block at %x\n",
-      //                      diskaddr(min_blk), plist[min_count].count, plist[min_count].tstamp, addr);
     } else 
     {
-      //      cprintf("load block at %x, no eviction\n", addr);
+            cprintf("load block at %x, no eviction\n", addr);
     }
     cprintf("total miss: %d\n", timestamp);
     curr_disk_size += PGSIZE;
@@ -206,7 +206,7 @@ bc_init(void)
 {
 	struct Super super;
 	set_pgfault_handler(bc_pgfault);
-	//check_bc();
+	check_bc();
 
 	// cache the super block by reading it once
 	memmove(&super, diskaddr(1), sizeof super);
