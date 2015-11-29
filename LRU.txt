@@ -1,0 +1,1188 @@
+make[1]: Entering directory `/home/dora/joslab'
++ cc kern/init.c
++ ld obj/kern/kernel
++ mk obj/kern/kernel.img
+make[1]: `obj/fs/fs.img' is up to date.
+make[1]: Leaving directory `/home/dora/joslab'
+qemu-system-i386 -hda obj/kern/kernel.img -serial mon:stdio -gdb tcp::26000 -D qemu.log -smp 1 -hdb obj/fs/fs.img 
+6828 decimal is 15254 octal!
+Physical memory: 66556K available, base = 640K, extended = 65532K
+ok!check_page_free_list passed!
+check_page_alloc() succeeded!
+check_page() succeeded!
+check_kern_pgdir() succeeded!
+ok!check_page_free_list passed!
+check_page_installed_pgdir() succeeded!
+SMP: CPU 0 found 1 CPU(s)
+enabled interrupts: 1 2 4
+FS is running
+FS can do I/O
+Device 1 presence: 1
+
+==============block usage list==============
+++++++++++++++++++end list++++++++++++++++++
+load block at 10001000, no eviction
+total miss: 0
+superblock is good
+
+==============block usage list==============
++block at 10001000, used 1 times, last used at time 1
+++++++++++++++++++end list++++++++++++++++++
+load block at 10002000, no eviction
+total miss: 1
+bitmap is good
+alloc_block is good
+
+==============block usage list==============
++block at 10001000, used 2 times, last used at time 2
++block at 10002000, used 1 times, last used at time 2
+++++++++++++++++++end list++++++++++++++++++
+load block at 10069000, no eviction
+total miss: 2
+
+==============block usage list==============
++block at 10001000, used 3 times, last used at time 3
++block at 10002000, used 1 times, last used at time 2
++block at 10069000, used 1 times, last used at time 3
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006a000, no eviction
+total miss: 3
+file_open is good
+
+==============block usage list==============
++block at 10001000, used 4 times, last used at time 4
++block at 10002000, used 1 times, last used at time 2
++block at 10069000, used 2 times, last used at time 4
++block at 1006a000, used 1 times, last used at time 4
+++++++++++++++++++end list++++++++++++++++++
+load block at 10003000, no eviction
+total miss: 4
+file_get_block is good
+file_flush is good
+file_truncate is good
+file rewrite is good
+serve_open is good
+file_stat is good
+file_read is good
+file_close is good
+stale fileid is good
+
+==============block usage list==============
++block at 10001000, used 5 times, last used at time 5
++block at 10002000, used 1 times, last used at time 2
++block at 10003000, used 1 times, last used at time 5
++block at 10069000, used 3 times, last used at time 5
++block at 1006a000, used 2 times, last used at time 5
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006c000, no eviction
+total miss: 5
+file_write is good
+file_read after file_write is good
+open is good
+
+==============block usage list==============
++block at 10001000, used 6 times, last used at time 6
++block at 10002000, used 1 times, last used at time 2
++block at 10003000, used 1 times, last used at time 5
++block at 10069000, used 4 times, last used at time 6
++block at 1006a000, used 3 times, last used at time 6
++block at 1006c000, used 1 times, last used at time 6
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006d000, no eviction
+total miss: 6
+
+==============block usage list==============
++block at 10001000, used 7 times, last used at time 7
++block at 10002000, used 1 times, last used at time 2
++block at 10003000, used 1 times, last used at time 5
++block at 10069000, used 4 times, last used at time 6
++block at 1006a000, used 4 times, last used at time 7
++block at 1006c000, used 1 times, last used at time 6
++block at 1006d000, used 1 times, last used at time 7
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006e000, no eviction
+total miss: 7
+
+==============block usage list==============
++block at 10001000, used 8 times, last used at time 8
++block at 10002000, used 1 times, last used at time 2
++block at 10003000, used 1 times, last used at time 5
++block at 10069000, used 4 times, last used at time 6
++block at 1006a000, used 5 times, last used at time 8
++block at 1006c000, used 1 times, last used at time 6
++block at 1006d000, used 1 times, last used at time 7
++block at 1006e000, used 1 times, last used at time 8
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006f000, no eviction
+total miss: 8
+
+==============block usage list==============
++block at 10001000, used 9 times, last used at time 9
++block at 10002000, used 1 times, last used at time 2
++block at 10003000, used 1 times, last used at time 5
++block at 10069000, used 4 times, last used at time 6
++block at 1006a000, used 6 times, last used at time 9
++block at 1006c000, used 1 times, last used at time 6
++block at 1006d000, used 1 times, last used at time 7
++block at 1006e000, used 1 times, last used at time 8
++block at 1006f000, used 1 times, last used at time 9
+++++++++++++++++++end list++++++++++++++++++
+load block at 10070000, no eviction
+total miss: 9
+
+==============block usage list==============
++block at 10001000, used 10 times, last used at time 10
++block at 10002000, used 1 times, last used at time 2
++block at 10003000, used 1 times, last used at time 5
++block at 10069000, used 4 times, last used at time 6
++block at 1006a000, used 7 times, last used at time 10
++block at 1006c000, used 1 times, last used at time 6
++block at 1006d000, used 1 times, last used at time 7
++block at 1006e000, used 1 times, last used at time 8
++block at 1006f000, used 1 times, last used at time 9
++block at 10070000, used 1 times, last used at time 10
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 1 times, last used at time 2, load block at 10071000
+total miss: 10
+
+==============block usage list==============
++block at 10001000, used 11 times, last used at time 11
++block at 10003000, used 1 times, last used at time 5
++block at 10069000, used 4 times, last used at time 6
++block at 1006a000, used 8 times, last used at time 11
++block at 1006c000, used 1 times, last used at time 6
++block at 1006d000, used 1 times, last used at time 7
++block at 1006e000, used 1 times, last used at time 8
++block at 1006f000, used 1 times, last used at time 9
++block at 10070000, used 2 times, last used at time 11
++block at 10071000, used 0 times, last used at time 11
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10003000, used 0 times, last used at time 0, load block at 10002000
+total miss: 11
+
+==============block usage list==============
++block at 10001000, used 12 times, last used at time 12
++block at 10002000, used 0 times, last used at time 12
++block at 10069000, used 4 times, last used at time 6
++block at 1006a000, used 9 times, last used at time 12
++block at 1006c000, used 1 times, last used at time 6
++block at 1006d000, used 1 times, last used at time 7
++block at 1006e000, used 1 times, last used at time 8
++block at 1006f000, used 1 times, last used at time 9
++block at 10070000, used 2 times, last used at time 11
++block at 10071000, used 1 times, last used at time 12
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10069000, used 0 times, last used at time 0, load block at 10072000
+total miss: 12
+
+==============block usage list==============
++block at 10001000, used 13 times, last used at time 13
++block at 10002000, used 0 times, last used at time 12
++block at 1006a000, used 10 times, last used at time 13
++block at 1006c000, used 1 times, last used at time 6
++block at 1006d000, used 1 times, last used at time 7
++block at 1006e000, used 1 times, last used at time 8
++block at 1006f000, used 1 times, last used at time 9
++block at 10070000, used 2 times, last used at time 11
++block at 10071000, used 1 times, last used at time 12
++block at 10072000, used 1 times, last used at time 13
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1006c000, used 0 times, last used at time 0, load block at 10073000
+total miss: 13
+
+==============block usage list==============
++block at 10001000, used 14 times, last used at time 14
++block at 10002000, used 0 times, last used at time 12
++block at 1006a000, used 11 times, last used at time 14
++block at 1006d000, used 1 times, last used at time 7
++block at 1006e000, used 1 times, last used at time 8
++block at 1006f000, used 1 times, last used at time 9
++block at 10070000, used 2 times, last used at time 11
++block at 10071000, used 1 times, last used at time 12
++block at 10072000, used 1 times, last used at time 13
++block at 10073000, used 1 times, last used at time 14
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1006d000, used 0 times, last used at time 0, load block at 10074000
+total miss: 14
+
+==============block usage list==============
++block at 10001000, used 15 times, last used at time 15
++block at 10002000, used 0 times, last used at time 12
++block at 1006a000, used 12 times, last used at time 15
++block at 1006e000, used 1 times, last used at time 8
++block at 1006f000, used 1 times, last used at time 9
++block at 10070000, used 2 times, last used at time 11
++block at 10071000, used 1 times, last used at time 12
++block at 10072000, used 1 times, last used at time 13
++block at 10073000, used 1 times, last used at time 14
++block at 10074000, used 1 times, last used at time 15
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1006e000, used 0 times, last used at time 0, load block at 10075000
+total miss: 15
+
+==============block usage list==============
++block at 10001000, used 16 times, last used at time 16
++block at 10002000, used 0 times, last used at time 12
++block at 1006a000, used 13 times, last used at time 16
++block at 1006f000, used 1 times, last used at time 9
++block at 10070000, used 2 times, last used at time 11
++block at 10071000, used 1 times, last used at time 12
++block at 10072000, used 1 times, last used at time 13
++block at 10073000, used 1 times, last used at time 14
++block at 10074000, used 1 times, last used at time 15
++block at 10075000, used 1 times, last used at time 16
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1006f000, used 0 times, last used at time 0, load block at 10076000
+total miss: 16
+
+==============block usage list==============
++block at 10001000, used 17 times, last used at time 17
++block at 10002000, used 0 times, last used at time 12
++block at 1006a000, used 14 times, last used at time 17
++block at 10070000, used 2 times, last used at time 11
++block at 10071000, used 1 times, last used at time 12
++block at 10072000, used 1 times, last used at time 13
++block at 10073000, used 1 times, last used at time 14
++block at 10074000, used 1 times, last used at time 15
++block at 10075000, used 1 times, last used at time 16
++block at 10076000, used 1 times, last used at time 17
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10070000, used 0 times, last used at time 0, load block at 10077000
+total miss: 17
+
+==============block usage list==============
++block at 10001000, used 18 times, last used at time 18
++block at 10002000, used 0 times, last used at time 12
++block at 1006a000, used 14 times, last used at time 17
++block at 10071000, used 1 times, last used at time 12
++block at 10072000, used 1 times, last used at time 13
++block at 10073000, used 1 times, last used at time 14
++block at 10074000, used 1 times, last used at time 15
++block at 10075000, used 1 times, last used at time 16
++block at 10076000, used 1 times, last used at time 17
++block at 10077000, used 1 times, last used at time 18
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 10078000
+total miss: 18
+
+==============block usage list==============
++block at 10001000, used 19 times, last used at time 19
++block at 1006a000, used 14 times, last used at time 17
++block at 10071000, used 1 times, last used at time 12
++block at 10072000, used 1 times, last used at time 13
++block at 10073000, used 1 times, last used at time 14
++block at 10074000, used 1 times, last used at time 15
++block at 10075000, used 1 times, last used at time 16
++block at 10076000, used 1 times, last used at time 17
++block at 10077000, used 2 times, last used at time 19
++block at 10078000, used 0 times, last used at time 19
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10071000, used 0 times, last used at time 0, load block at 10002000
+total miss: 19
+
+==============block usage list==============
++block at 10001000, used 20 times, last used at time 20
++block at 10002000, used 0 times, last used at time 20
++block at 1006a000, used 15 times, last used at time 20
++block at 10072000, used 1 times, last used at time 13
++block at 10073000, used 1 times, last used at time 14
++block at 10074000, used 1 times, last used at time 15
++block at 10075000, used 1 times, last used at time 16
++block at 10076000, used 1 times, last used at time 17
++block at 10077000, used 3 times, last used at time 20
++block at 10078000, used 1 times, last used at time 20
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10072000, used 0 times, last used at time 0, load block at 10079000
+total miss: 20
+
+==============block usage list==============
++block at 10001000, used 21 times, last used at time 21
++block at 10002000, used 0 times, last used at time 20
++block at 1006a000, used 16 times, last used at time 21
++block at 10073000, used 1 times, last used at time 14
++block at 10074000, used 1 times, last used at time 15
++block at 10075000, used 1 times, last used at time 16
++block at 10076000, used 1 times, last used at time 17
++block at 10077000, used 4 times, last used at time 21
++block at 10078000, used 1 times, last used at time 20
++block at 10079000, used 1 times, last used at time 21
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10073000, used 0 times, last used at time 0, load block at 1007a000
+total miss: 21
+
+==============block usage list==============
++block at 10001000, used 22 times, last used at time 22
++block at 10002000, used 0 times, last used at time 20
++block at 1006a000, used 17 times, last used at time 22
++block at 10074000, used 1 times, last used at time 15
++block at 10075000, used 1 times, last used at time 16
++block at 10076000, used 1 times, last used at time 17
++block at 10077000, used 5 times, last used at time 22
++block at 10078000, used 1 times, last used at time 20
++block at 10079000, used 1 times, last used at time 21
++block at 1007a000, used 1 times, last used at time 22
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10074000, used 0 times, last used at time 0, load block at 1007b000
+total miss: 22
+
+==============block usage list==============
++block at 10001000, used 23 times, last used at time 23
++block at 10002000, used 0 times, last used at time 20
++block at 1006a000, used 18 times, last used at time 23
++block at 10075000, used 1 times, last used at time 16
++block at 10076000, used 1 times, last used at time 17
++block at 10077000, used 6 times, last used at time 23
++block at 10078000, used 1 times, last used at time 20
++block at 10079000, used 1 times, last used at time 21
++block at 1007a000, used 1 times, last used at time 22
++block at 1007b000, used 1 times, last used at time 23
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10075000, used 0 times, last used at time 0, load block at 1007c000
+total miss: 23
+
+==============block usage list==============
++block at 10001000, used 24 times, last used at time 24
++block at 10002000, used 0 times, last used at time 20
++block at 1006a000, used 19 times, last used at time 24
++block at 10076000, used 1 times, last used at time 17
++block at 10077000, used 7 times, last used at time 24
++block at 10078000, used 1 times, last used at time 20
++block at 10079000, used 1 times, last used at time 21
++block at 1007a000, used 1 times, last used at time 22
++block at 1007b000, used 1 times, last used at time 23
++block at 1007c000, used 1 times, last used at time 24
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10076000, used 0 times, last used at time 0, load block at 1007d000
+total miss: 24
+
+==============block usage list==============
++block at 10001000, used 25 times, last used at time 25
++block at 10002000, used 0 times, last used at time 20
++block at 1006a000, used 20 times, last used at time 25
++block at 10077000, used 8 times, last used at time 25
++block at 10078000, used 1 times, last used at time 20
++block at 10079000, used 1 times, last used at time 21
++block at 1007a000, used 1 times, last used at time 22
++block at 1007b000, used 1 times, last used at time 23
++block at 1007c000, used 1 times, last used at time 24
++block at 1007d000, used 1 times, last used at time 25
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 1007e000
+total miss: 25
+
+==============block usage list==============
++block at 10001000, used 26 times, last used at time 26
++block at 1006a000, used 21 times, last used at time 26
++block at 10077000, used 9 times, last used at time 26
++block at 10078000, used 1 times, last used at time 20
++block at 10079000, used 1 times, last used at time 21
++block at 1007a000, used 1 times, last used at time 22
++block at 1007b000, used 1 times, last used at time 23
++block at 1007c000, used 1 times, last used at time 24
++block at 1007d000, used 2 times, last used at time 26
++block at 1007e000, used 0 times, last used at time 26
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10078000, used 0 times, last used at time 0, load block at 10002000
+total miss: 26
+
+==============block usage list==============
++block at 10001000, used 27 times, last used at time 27
++block at 10002000, used 0 times, last used at time 27
++block at 1006a000, used 22 times, last used at time 27
++block at 10077000, used 10 times, last used at time 27
++block at 10079000, used 1 times, last used at time 21
++block at 1007a000, used 1 times, last used at time 22
++block at 1007b000, used 1 times, last used at time 23
++block at 1007c000, used 1 times, last used at time 24
++block at 1007d000, used 2 times, last used at time 26
++block at 1007e000, used 1 times, last used at time 27
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10079000, used 0 times, last used at time 0, load block at 1007f000
+total miss: 27
+
+==============block usage list==============
++block at 10001000, used 28 times, last used at time 28
++block at 10002000, used 0 times, last used at time 27
++block at 1006a000, used 23 times, last used at time 28
++block at 10077000, used 11 times, last used at time 28
++block at 1007a000, used 1 times, last used at time 22
++block at 1007b000, used 1 times, last used at time 23
++block at 1007c000, used 1 times, last used at time 24
++block at 1007d000, used 2 times, last used at time 26
++block at 1007e000, used 1 times, last used at time 27
++block at 1007f000, used 1 times, last used at time 28
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007a000, used 0 times, last used at time 0, load block at 10080000
+total miss: 28
+
+==============block usage list==============
++block at 10001000, used 29 times, last used at time 29
++block at 10002000, used 0 times, last used at time 27
++block at 1006a000, used 24 times, last used at time 29
++block at 10077000, used 12 times, last used at time 29
++block at 1007b000, used 1 times, last used at time 23
++block at 1007c000, used 1 times, last used at time 24
++block at 1007d000, used 2 times, last used at time 26
++block at 1007e000, used 1 times, last used at time 27
++block at 1007f000, used 1 times, last used at time 28
++block at 10080000, used 1 times, last used at time 29
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007b000, used 0 times, last used at time 0, load block at 10081000
+total miss: 29
+
+==============block usage list==============
++block at 10001000, used 30 times, last used at time 30
++block at 10002000, used 0 times, last used at time 27
++block at 1006a000, used 25 times, last used at time 30
++block at 10077000, used 13 times, last used at time 30
++block at 1007c000, used 1 times, last used at time 24
++block at 1007d000, used 2 times, last used at time 26
++block at 1007e000, used 1 times, last used at time 27
++block at 1007f000, used 1 times, last used at time 28
++block at 10080000, used 1 times, last used at time 29
++block at 10081000, used 1 times, last used at time 30
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007c000, used 0 times, last used at time 0, load block at 10082000
+total miss: 30
+
+==============block usage list==============
++block at 10001000, used 31 times, last used at time 31
++block at 10002000, used 0 times, last used at time 27
++block at 1006a000, used 26 times, last used at time 31
++block at 10077000, used 14 times, last used at time 31
++block at 1007d000, used 2 times, last used at time 26
++block at 1007e000, used 1 times, last used at time 27
++block at 1007f000, used 1 times, last used at time 28
++block at 10080000, used 1 times, last used at time 29
++block at 10081000, used 1 times, last used at time 30
++block at 10082000, used 1 times, last used at time 31
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007d000, used 0 times, last used at time 0, load block at 10083000
+total miss: 31
+
+==============block usage list==============
++block at 10001000, used 32 times, last used at time 32
++block at 10002000, used 0 times, last used at time 27
++block at 1006a000, used 27 times, last used at time 32
++block at 10077000, used 15 times, last used at time 32
++block at 1007e000, used 1 times, last used at time 27
++block at 1007f000, used 1 times, last used at time 28
++block at 10080000, used 1 times, last used at time 29
++block at 10081000, used 1 times, last used at time 30
++block at 10082000, used 1 times, last used at time 31
++block at 10083000, used 1 times, last used at time 32
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 10084000
+total miss: 32
+
+==============block usage list==============
++block at 10001000, used 33 times, last used at time 33
++block at 1006a000, used 28 times, last used at time 33
++block at 10077000, used 16 times, last used at time 33
++block at 1007e000, used 1 times, last used at time 27
++block at 1007f000, used 1 times, last used at time 28
++block at 10080000, used 1 times, last used at time 29
++block at 10081000, used 1 times, last used at time 30
++block at 10082000, used 1 times, last used at time 31
++block at 10083000, used 2 times, last used at time 33
++block at 10084000, used 0 times, last used at time 33
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007e000, used 0 times, last used at time 0, load block at 10002000
+total miss: 33
+
+==============block usage list==============
++block at 10001000, used 34 times, last used at time 34
++block at 10002000, used 0 times, last used at time 34
++block at 1006a000, used 29 times, last used at time 34
++block at 10077000, used 17 times, last used at time 34
++block at 1007f000, used 1 times, last used at time 28
++block at 10080000, used 1 times, last used at time 29
++block at 10081000, used 1 times, last used at time 30
++block at 10082000, used 1 times, last used at time 31
++block at 10083000, used 2 times, last used at time 33
++block at 10084000, used 1 times, last used at time 34
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007f000, used 0 times, last used at time 0, load block at 10085000
+total miss: 34
+
+==============block usage list==============
++block at 10001000, used 35 times, last used at time 35
++block at 10002000, used 0 times, last used at time 34
++block at 1006a000, used 30 times, last used at time 35
++block at 10077000, used 18 times, last used at time 35
++block at 10080000, used 1 times, last used at time 29
++block at 10081000, used 1 times, last used at time 30
++block at 10082000, used 1 times, last used at time 31
++block at 10083000, used 2 times, last used at time 33
++block at 10084000, used 1 times, last used at time 34
++block at 10085000, used 1 times, last used at time 35
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10080000, used 0 times, last used at time 0, load block at 10086000
+total miss: 35
+
+==============block usage list==============
++block at 10001000, used 36 times, last used at time 36
++block at 10002000, used 0 times, last used at time 34
++block at 1006a000, used 31 times, last used at time 36
++block at 10077000, used 19 times, last used at time 36
++block at 10081000, used 1 times, last used at time 30
++block at 10082000, used 1 times, last used at time 31
++block at 10083000, used 2 times, last used at time 33
++block at 10084000, used 1 times, last used at time 34
++block at 10085000, used 1 times, last used at time 35
++block at 10086000, used 1 times, last used at time 36
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10081000, used 0 times, last used at time 0, load block at 10087000
+total miss: 36
+
+==============block usage list==============
++block at 10001000, used 37 times, last used at time 37
++block at 10002000, used 0 times, last used at time 34
++block at 1006a000, used 32 times, last used at time 37
++block at 10077000, used 20 times, last used at time 37
++block at 10082000, used 1 times, last used at time 31
++block at 10083000, used 2 times, last used at time 33
++block at 10084000, used 1 times, last used at time 34
++block at 10085000, used 1 times, last used at time 35
++block at 10086000, used 1 times, last used at time 36
++block at 10087000, used 1 times, last used at time 37
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10082000, used 0 times, last used at time 0, load block at 10088000
+total miss: 37
+
+==============block usage list==============
++block at 10001000, used 38 times, last used at time 38
++block at 10002000, used 0 times, last used at time 34
++block at 1006a000, used 33 times, last used at time 38
++block at 10077000, used 21 times, last used at time 38
++block at 10083000, used 2 times, last used at time 33
++block at 10084000, used 1 times, last used at time 34
++block at 10085000, used 1 times, last used at time 35
++block at 10086000, used 1 times, last used at time 36
++block at 10087000, used 1 times, last used at time 37
++block at 10088000, used 1 times, last used at time 38
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10083000, used 0 times, last used at time 0, load block at 10089000
+total miss: 38
+
+==============block usage list==============
++block at 10001000, used 39 times, last used at time 39
++block at 10002000, used 0 times, last used at time 34
++block at 1006a000, used 34 times, last used at time 39
++block at 10077000, used 22 times, last used at time 39
++block at 10084000, used 1 times, last used at time 34
++block at 10085000, used 1 times, last used at time 35
++block at 10086000, used 1 times, last used at time 36
++block at 10087000, used 1 times, last used at time 37
++block at 10088000, used 1 times, last used at time 38
++block at 10089000, used 1 times, last used at time 39
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 1008a000
+total miss: 39
+
+==============block usage list==============
++block at 10001000, used 40 times, last used at time 40
++block at 1006a000, used 35 times, last used at time 40
++block at 10077000, used 23 times, last used at time 40
++block at 10084000, used 1 times, last used at time 34
++block at 10085000, used 1 times, last used at time 35
++block at 10086000, used 1 times, last used at time 36
++block at 10087000, used 1 times, last used at time 37
++block at 10088000, used 1 times, last used at time 38
++block at 10089000, used 2 times, last used at time 40
++block at 1008a000, used 0 times, last used at time 40
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10084000, used 0 times, last used at time 0, load block at 10002000
+total miss: 40
+
+==============block usage list==============
++block at 10001000, used 41 times, last used at time 41
++block at 10002000, used 0 times, last used at time 41
++block at 1006a000, used 36 times, last used at time 41
++block at 10077000, used 24 times, last used at time 41
++block at 10085000, used 1 times, last used at time 35
++block at 10086000, used 1 times, last used at time 36
++block at 10087000, used 1 times, last used at time 37
++block at 10088000, used 1 times, last used at time 38
++block at 10089000, used 2 times, last used at time 40
++block at 1008a000, used 1 times, last used at time 41
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10085000, used 0 times, last used at time 0, load block at 1008b000
+total miss: 41
+
+==============block usage list==============
++block at 10001000, used 42 times, last used at time 42
++block at 10002000, used 0 times, last used at time 41
++block at 1006a000, used 37 times, last used at time 42
++block at 10077000, used 25 times, last used at time 42
++block at 10086000, used 1 times, last used at time 36
++block at 10087000, used 1 times, last used at time 37
++block at 10088000, used 1 times, last used at time 38
++block at 10089000, used 2 times, last used at time 40
++block at 1008a000, used 1 times, last used at time 41
++block at 1008b000, used 0 times, last used at time 42
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10086000, used 0 times, last used at time 0, load block at 10069000
+total miss: 42
+
+==============block usage list==============
++block at 10001000, used 43 times, last used at time 43
++block at 10002000, used 0 times, last used at time 41
++block at 10069000, used 1 times, last used at time 43
++block at 1006a000, used 38 times, last used at time 43
++block at 10077000, used 25 times, last used at time 42
++block at 10087000, used 1 times, last used at time 37
++block at 10088000, used 1 times, last used at time 38
++block at 10089000, used 2 times, last used at time 40
++block at 1008a000, used 1 times, last used at time 41
++block at 1008b000, used 0 times, last used at time 42
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10087000, used 0 times, last used at time 0, load block at 1006d000
+total miss: 43
+
+==============block usage list==============
++block at 10001000, used 44 times, last used at time 44
++block at 10002000, used 0 times, last used at time 41
++block at 10069000, used 1 times, last used at time 43
++block at 1006a000, used 39 times, last used at time 44
++block at 1006d000, used 1 times, last used at time 44
++block at 10077000, used 25 times, last used at time 42
++block at 10088000, used 1 times, last used at time 38
++block at 10089000, used 2 times, last used at time 40
++block at 1008a000, used 1 times, last used at time 41
++block at 1008b000, used 0 times, last used at time 42
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10088000, used 0 times, last used at time 0, load block at 1006e000
+total miss: 44
+
+==============block usage list==============
++block at 10001000, used 45 times, last used at time 45
++block at 10002000, used 0 times, last used at time 41
++block at 10069000, used 1 times, last used at time 43
++block at 1006a000, used 40 times, last used at time 45
++block at 1006d000, used 1 times, last used at time 44
++block at 1006e000, used 1 times, last used at time 45
++block at 10077000, used 25 times, last used at time 42
++block at 10089000, used 2 times, last used at time 40
++block at 1008a000, used 1 times, last used at time 41
++block at 1008b000, used 0 times, last used at time 42
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10089000, used 0 times, last used at time 0, load block at 1006f000
+total miss: 45
+
+==============block usage list==============
++block at 10001000, used 46 times, last used at time 46
++block at 10002000, used 0 times, last used at time 41
++block at 10069000, used 1 times, last used at time 43
++block at 1006a000, used 41 times, last used at time 46
++block at 1006d000, used 1 times, last used at time 44
++block at 1006e000, used 1 times, last used at time 45
++block at 1006f000, used 1 times, last used at time 46
++block at 10077000, used 25 times, last used at time 42
++block at 1008a000, used 1 times, last used at time 41
++block at 1008b000, used 0 times, last used at time 42
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 10070000
+total miss: 46
+
+==============block usage list==============
++block at 10001000, used 47 times, last used at time 47
++block at 10069000, used 1 times, last used at time 43
++block at 1006a000, used 42 times, last used at time 47
++block at 1006d000, used 1 times, last used at time 44
++block at 1006e000, used 1 times, last used at time 45
++block at 1006f000, used 2 times, last used at time 47
++block at 10070000, used 0 times, last used at time 47
++block at 10077000, used 25 times, last used at time 42
++block at 1008a000, used 1 times, last used at time 41
++block at 1008b000, used 0 times, last used at time 42
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1008a000, used 0 times, last used at time 0, load block at 10002000
+total miss: 47
+
+==============block usage list==============
++block at 10001000, used 48 times, last used at time 48
++block at 10002000, used 0 times, last used at time 48
++block at 10069000, used 1 times, last used at time 43
++block at 1006a000, used 43 times, last used at time 48
++block at 1006d000, used 1 times, last used at time 44
++block at 1006e000, used 1 times, last used at time 45
++block at 1006f000, used 2 times, last used at time 47
++block at 10070000, used 1 times, last used at time 48
++block at 10077000, used 25 times, last used at time 42
++block at 1008b000, used 0 times, last used at time 42
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10077000, used 0 times, last used at time 0, load block at 10071000
+total miss: 48
+
+==============block usage list==============
++block at 10001000, used 49 times, last used at time 49
++block at 10002000, used 0 times, last used at time 48
++block at 10069000, used 1 times, last used at time 43
++block at 1006a000, used 44 times, last used at time 49
++block at 1006d000, used 1 times, last used at time 44
++block at 1006e000, used 1 times, last used at time 45
++block at 1006f000, used 2 times, last used at time 47
++block at 10070000, used 1 times, last used at time 48
++block at 10071000, used 1 times, last used at time 49
++block at 1008b000, used 0 times, last used at time 42
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1008b000, used 0 times, last used at time 0, load block at 10072000
+total miss: 49
+
+==============block usage list==============
++block at 10001000, used 50 times, last used at time 50
++block at 10002000, used 0 times, last used at time 48
++block at 10069000, used 1 times, last used at time 43
++block at 1006a000, used 45 times, last used at time 50
++block at 1006d000, used 1 times, last used at time 44
++block at 1006e000, used 1 times, last used at time 45
++block at 1006f000, used 2 times, last used at time 47
++block at 10070000, used 1 times, last used at time 48
++block at 10071000, used 1 times, last used at time 49
++block at 10072000, used 1 times, last used at time 50
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10069000, used 0 times, last used at time 0, load block at 10073000
+total miss: 50
+
+==============block usage list==============
++block at 10001000, used 51 times, last used at time 51
++block at 10002000, used 0 times, last used at time 48
++block at 1006a000, used 46 times, last used at time 51
++block at 1006d000, used 1 times, last used at time 44
++block at 1006e000, used 1 times, last used at time 45
++block at 1006f000, used 2 times, last used at time 47
++block at 10070000, used 1 times, last used at time 48
++block at 10071000, used 1 times, last used at time 49
++block at 10072000, used 1 times, last used at time 50
++block at 10073000, used 1 times, last used at time 51
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1006d000, used 0 times, last used at time 0, load block at 10074000
+total miss: 51
+
+==============block usage list==============
++block at 10001000, used 52 times, last used at time 52
++block at 10002000, used 0 times, last used at time 48
++block at 1006a000, used 47 times, last used at time 52
++block at 1006e000, used 1 times, last used at time 45
++block at 1006f000, used 2 times, last used at time 47
++block at 10070000, used 1 times, last used at time 48
++block at 10071000, used 1 times, last used at time 49
++block at 10072000, used 1 times, last used at time 50
++block at 10073000, used 1 times, last used at time 51
++block at 10074000, used 1 times, last used at time 52
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1006e000, used 0 times, last used at time 0, load block at 10075000
+total miss: 52
+
+==============block usage list==============
++block at 10001000, used 53 times, last used at time 53
++block at 10002000, used 0 times, last used at time 48
++block at 1006a000, used 48 times, last used at time 53
++block at 1006f000, used 2 times, last used at time 47
++block at 10070000, used 1 times, last used at time 48
++block at 10071000, used 1 times, last used at time 49
++block at 10072000, used 1 times, last used at time 50
++block at 10073000, used 1 times, last used at time 51
++block at 10074000, used 1 times, last used at time 52
++block at 10075000, used 1 times, last used at time 53
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1006f000, used 0 times, last used at time 0, load block at 10076000
+total miss: 53
+
+==============block usage list==============
++block at 10001000, used 54 times, last used at time 54
++block at 10002000, used 0 times, last used at time 48
++block at 1006a000, used 49 times, last used at time 54
++block at 10070000, used 1 times, last used at time 48
++block at 10071000, used 1 times, last used at time 49
++block at 10072000, used 1 times, last used at time 50
++block at 10073000, used 1 times, last used at time 51
++block at 10074000, used 1 times, last used at time 52
++block at 10075000, used 1 times, last used at time 53
++block at 10076000, used 1 times, last used at time 54
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 10077000
+total miss: 54
+
+==============block usage list==============
++block at 10001000, used 55 times, last used at time 55
++block at 1006a000, used 50 times, last used at time 55
++block at 10070000, used 1 times, last used at time 48
++block at 10071000, used 1 times, last used at time 49
++block at 10072000, used 1 times, last used at time 50
++block at 10073000, used 1 times, last used at time 51
++block at 10074000, used 1 times, last used at time 52
++block at 10075000, used 1 times, last used at time 53
++block at 10076000, used 2 times, last used at time 55
++block at 10077000, used 0 times, last used at time 55
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10070000, used 0 times, last used at time 0, load block at 10002000
+total miss: 55
+
+==============block usage list==============
++block at 10001000, used 56 times, last used at time 56
++block at 10002000, used 0 times, last used at time 56
++block at 1006a000, used 50 times, last used at time 55
++block at 10071000, used 1 times, last used at time 49
++block at 10072000, used 1 times, last used at time 50
++block at 10073000, used 1 times, last used at time 51
++block at 10074000, used 1 times, last used at time 52
++block at 10075000, used 1 times, last used at time 53
++block at 10076000, used 2 times, last used at time 55
++block at 10077000, used 1 times, last used at time 56
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10071000, used 0 times, last used at time 0, load block at 10078000
+total miss: 56
+
+==============block usage list==============
++block at 10001000, used 57 times, last used at time 57
++block at 10002000, used 0 times, last used at time 56
++block at 1006a000, used 51 times, last used at time 57
++block at 10072000, used 1 times, last used at time 50
++block at 10073000, used 1 times, last used at time 51
++block at 10074000, used 1 times, last used at time 52
++block at 10075000, used 1 times, last used at time 53
++block at 10076000, used 2 times, last used at time 55
++block at 10077000, used 2 times, last used at time 57
++block at 10078000, used 1 times, last used at time 57
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10072000, used 0 times, last used at time 0, load block at 10079000
+total miss: 57
+
+==============block usage list==============
++block at 10001000, used 58 times, last used at time 58
++block at 10002000, used 0 times, last used at time 56
++block at 1006a000, used 52 times, last used at time 58
++block at 10073000, used 1 times, last used at time 51
++block at 10074000, used 1 times, last used at time 52
++block at 10075000, used 1 times, last used at time 53
++block at 10076000, used 2 times, last used at time 55
++block at 10077000, used 3 times, last used at time 58
++block at 10078000, used 1 times, last used at time 57
++block at 10079000, used 1 times, last used at time 58
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10073000, used 0 times, last used at time 0, load block at 1007a000
+total miss: 58
+
+==============block usage list==============
++block at 10001000, used 59 times, last used at time 59
++block at 10002000, used 0 times, last used at time 56
++block at 1006a000, used 53 times, last used at time 59
++block at 10074000, used 1 times, last used at time 52
++block at 10075000, used 1 times, last used at time 53
++block at 10076000, used 2 times, last used at time 55
++block at 10077000, used 4 times, last used at time 59
++block at 10078000, used 1 times, last used at time 57
++block at 10079000, used 1 times, last used at time 58
++block at 1007a000, used 1 times, last used at time 59
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10074000, used 0 times, last used at time 0, load block at 1007b000
+total miss: 59
+
+==============block usage list==============
++block at 10001000, used 60 times, last used at time 60
++block at 10002000, used 0 times, last used at time 56
++block at 1006a000, used 54 times, last used at time 60
++block at 10075000, used 1 times, last used at time 53
++block at 10076000, used 2 times, last used at time 55
++block at 10077000, used 5 times, last used at time 60
++block at 10078000, used 1 times, last used at time 57
++block at 10079000, used 1 times, last used at time 58
++block at 1007a000, used 1 times, last used at time 59
++block at 1007b000, used 1 times, last used at time 60
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10075000, used 0 times, last used at time 0, load block at 1007c000
+total miss: 60
+
+==============block usage list==============
++block at 10001000, used 61 times, last used at time 61
++block at 10002000, used 0 times, last used at time 56
++block at 1006a000, used 55 times, last used at time 61
++block at 10076000, used 2 times, last used at time 55
++block at 10077000, used 6 times, last used at time 61
++block at 10078000, used 1 times, last used at time 57
++block at 10079000, used 1 times, last used at time 58
++block at 1007a000, used 1 times, last used at time 59
++block at 1007b000, used 1 times, last used at time 60
++block at 1007c000, used 1 times, last used at time 61
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10076000, used 0 times, last used at time 0, load block at 1007d000
+total miss: 61
+
+==============block usage list==============
++block at 10001000, used 62 times, last used at time 62
++block at 10002000, used 0 times, last used at time 56
++block at 1006a000, used 56 times, last used at time 62
++block at 10077000, used 7 times, last used at time 62
++block at 10078000, used 1 times, last used at time 57
++block at 10079000, used 1 times, last used at time 58
++block at 1007a000, used 1 times, last used at time 59
++block at 1007b000, used 1 times, last used at time 60
++block at 1007c000, used 1 times, last used at time 61
++block at 1007d000, used 1 times, last used at time 62
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 1007e000
+total miss: 62
+
+==============block usage list==============
++block at 10001000, used 63 times, last used at time 63
++block at 1006a000, used 57 times, last used at time 63
++block at 10077000, used 8 times, last used at time 63
++block at 10078000, used 1 times, last used at time 57
++block at 10079000, used 1 times, last used at time 58
++block at 1007a000, used 1 times, last used at time 59
++block at 1007b000, used 1 times, last used at time 60
++block at 1007c000, used 1 times, last used at time 61
++block at 1007d000, used 2 times, last used at time 63
++block at 1007e000, used 0 times, last used at time 63
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10078000, used 0 times, last used at time 0, load block at 10002000
+total miss: 63
+
+==============block usage list==============
++block at 10001000, used 64 times, last used at time 64
++block at 10002000, used 0 times, last used at time 64
++block at 1006a000, used 58 times, last used at time 64
++block at 10077000, used 9 times, last used at time 64
++block at 10079000, used 1 times, last used at time 58
++block at 1007a000, used 1 times, last used at time 59
++block at 1007b000, used 1 times, last used at time 60
++block at 1007c000, used 1 times, last used at time 61
++block at 1007d000, used 2 times, last used at time 63
++block at 1007e000, used 1 times, last used at time 64
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10079000, used 0 times, last used at time 0, load block at 1007f000
+total miss: 64
+
+==============block usage list==============
++block at 10001000, used 65 times, last used at time 65
++block at 10002000, used 0 times, last used at time 64
++block at 1006a000, used 59 times, last used at time 65
++block at 10077000, used 10 times, last used at time 65
++block at 1007a000, used 1 times, last used at time 59
++block at 1007b000, used 1 times, last used at time 60
++block at 1007c000, used 1 times, last used at time 61
++block at 1007d000, used 2 times, last used at time 63
++block at 1007e000, used 1 times, last used at time 64
++block at 1007f000, used 1 times, last used at time 65
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007a000, used 0 times, last used at time 0, load block at 10080000
+total miss: 65
+
+==============block usage list==============
++block at 10001000, used 66 times, last used at time 66
++block at 10002000, used 0 times, last used at time 64
++block at 1006a000, used 60 times, last used at time 66
++block at 10077000, used 11 times, last used at time 66
++block at 1007b000, used 1 times, last used at time 60
++block at 1007c000, used 1 times, last used at time 61
++block at 1007d000, used 2 times, last used at time 63
++block at 1007e000, used 1 times, last used at time 64
++block at 1007f000, used 1 times, last used at time 65
++block at 10080000, used 1 times, last used at time 66
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007b000, used 0 times, last used at time 0, load block at 10081000
+total miss: 66
+
+==============block usage list==============
++block at 10001000, used 67 times, last used at time 67
++block at 10002000, used 0 times, last used at time 64
++block at 1006a000, used 61 times, last used at time 67
++block at 10077000, used 12 times, last used at time 67
++block at 1007c000, used 1 times, last used at time 61
++block at 1007d000, used 2 times, last used at time 63
++block at 1007e000, used 1 times, last used at time 64
++block at 1007f000, used 1 times, last used at time 65
++block at 10080000, used 1 times, last used at time 66
++block at 10081000, used 1 times, last used at time 67
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007c000, used 0 times, last used at time 0, load block at 10082000
+total miss: 67
+
+==============block usage list==============
++block at 10001000, used 68 times, last used at time 68
++block at 10002000, used 0 times, last used at time 64
++block at 1006a000, used 62 times, last used at time 68
++block at 10077000, used 13 times, last used at time 68
++block at 1007d000, used 2 times, last used at time 63
++block at 1007e000, used 1 times, last used at time 64
++block at 1007f000, used 1 times, last used at time 65
++block at 10080000, used 1 times, last used at time 66
++block at 10081000, used 1 times, last used at time 67
++block at 10082000, used 1 times, last used at time 68
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007d000, used 0 times, last used at time 0, load block at 10083000
+total miss: 68
+
+==============block usage list==============
++block at 10001000, used 69 times, last used at time 69
++block at 10002000, used 0 times, last used at time 64
++block at 1006a000, used 63 times, last used at time 69
++block at 10077000, used 14 times, last used at time 69
++block at 1007e000, used 1 times, last used at time 64
++block at 1007f000, used 1 times, last used at time 65
++block at 10080000, used 1 times, last used at time 66
++block at 10081000, used 1 times, last used at time 67
++block at 10082000, used 1 times, last used at time 68
++block at 10083000, used 1 times, last used at time 69
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 10084000
+total miss: 69
+
+==============block usage list==============
++block at 10001000, used 70 times, last used at time 70
++block at 1006a000, used 64 times, last used at time 70
++block at 10077000, used 15 times, last used at time 70
++block at 1007e000, used 1 times, last used at time 64
++block at 1007f000, used 1 times, last used at time 65
++block at 10080000, used 1 times, last used at time 66
++block at 10081000, used 1 times, last used at time 67
++block at 10082000, used 1 times, last used at time 68
++block at 10083000, used 2 times, last used at time 70
++block at 10084000, used 0 times, last used at time 70
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007e000, used 0 times, last used at time 0, load block at 10002000
+total miss: 70
+
+==============block usage list==============
++block at 10001000, used 71 times, last used at time 71
++block at 10002000, used 0 times, last used at time 71
++block at 1006a000, used 65 times, last used at time 71
++block at 10077000, used 16 times, last used at time 71
++block at 1007f000, used 1 times, last used at time 65
++block at 10080000, used 1 times, last used at time 66
++block at 10081000, used 1 times, last used at time 67
++block at 10082000, used 1 times, last used at time 68
++block at 10083000, used 2 times, last used at time 70
++block at 10084000, used 1 times, last used at time 71
+++++++++++++++++++end list++++++++++++++++++
+evict block at 1007f000, used 0 times, last used at time 0, load block at 10085000
+total miss: 71
+
+==============block usage list==============
++block at 10001000, used 72 times, last used at time 72
++block at 10002000, used 0 times, last used at time 71
++block at 1006a000, used 66 times, last used at time 72
++block at 10077000, used 17 times, last used at time 72
++block at 10080000, used 1 times, last used at time 66
++block at 10081000, used 1 times, last used at time 67
++block at 10082000, used 1 times, last used at time 68
++block at 10083000, used 2 times, last used at time 70
++block at 10084000, used 1 times, last used at time 71
++block at 10085000, used 1 times, last used at time 72
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10080000, used 0 times, last used at time 0, load block at 10086000
+total miss: 72
+
+==============block usage list==============
++block at 10001000, used 73 times, last used at time 73
++block at 10002000, used 0 times, last used at time 71
++block at 1006a000, used 67 times, last used at time 73
++block at 10077000, used 18 times, last used at time 73
++block at 10081000, used 1 times, last used at time 67
++block at 10082000, used 1 times, last used at time 68
++block at 10083000, used 2 times, last used at time 70
++block at 10084000, used 1 times, last used at time 71
++block at 10085000, used 1 times, last used at time 72
++block at 10086000, used 1 times, last used at time 73
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10081000, used 0 times, last used at time 0, load block at 10087000
+total miss: 73
+
+==============block usage list==============
++block at 10001000, used 74 times, last used at time 74
++block at 10002000, used 0 times, last used at time 71
++block at 1006a000, used 68 times, last used at time 74
++block at 10077000, used 19 times, last used at time 74
++block at 10082000, used 1 times, last used at time 68
++block at 10083000, used 2 times, last used at time 70
++block at 10084000, used 1 times, last used at time 71
++block at 10085000, used 1 times, last used at time 72
++block at 10086000, used 1 times, last used at time 73
++block at 10087000, used 1 times, last used at time 74
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10082000, used 0 times, last used at time 0, load block at 10088000
+total miss: 74
+
+==============block usage list==============
++block at 10001000, used 75 times, last used at time 75
++block at 10002000, used 0 times, last used at time 71
++block at 1006a000, used 69 times, last used at time 75
++block at 10077000, used 20 times, last used at time 75
++block at 10083000, used 2 times, last used at time 70
++block at 10084000, used 1 times, last used at time 71
++block at 10085000, used 1 times, last used at time 72
++block at 10086000, used 1 times, last used at time 73
++block at 10087000, used 1 times, last used at time 74
++block at 10088000, used 1 times, last used at time 75
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10083000, used 0 times, last used at time 0, load block at 10089000
+total miss: 75
+
+==============block usage list==============
++block at 10001000, used 76 times, last used at time 76
++block at 10002000, used 0 times, last used at time 71
++block at 1006a000, used 70 times, last used at time 76
++block at 10077000, used 21 times, last used at time 76
++block at 10084000, used 1 times, last used at time 71
++block at 10085000, used 1 times, last used at time 72
++block at 10086000, used 1 times, last used at time 73
++block at 10087000, used 1 times, last used at time 74
++block at 10088000, used 1 times, last used at time 75
++block at 10089000, used 1 times, last used at time 76
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10002000, used 0 times, last used at time 0, load block at 1008a000
+total miss: 76
+
+==============block usage list==============
++block at 10001000, used 77 times, last used at time 77
++block at 1006a000, used 71 times, last used at time 77
++block at 10077000, used 22 times, last used at time 77
++block at 10084000, used 1 times, last used at time 71
++block at 10085000, used 1 times, last used at time 72
++block at 10086000, used 1 times, last used at time 73
++block at 10087000, used 1 times, last used at time 74
++block at 10088000, used 1 times, last used at time 75
++block at 10089000, used 2 times, last used at time 77
++block at 1008a000, used 0 times, last used at time 77
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10084000, used 0 times, last used at time 0, load block at 10002000
+total miss: 77
+
+==============block usage list==============
++block at 10001000, used 78 times, last used at time 78
++block at 10002000, used 0 times, last used at time 78
++block at 1006a000, used 72 times, last used at time 78
++block at 10077000, used 23 times, last used at time 78
++block at 10085000, used 1 times, last used at time 72
++block at 10086000, used 1 times, last used at time 73
++block at 10087000, used 1 times, last used at time 74
++block at 10088000, used 1 times, last used at time 75
++block at 10089000, used 2 times, last used at time 77
++block at 1008a000, used 1 times, last used at time 78
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10085000, used 0 times, last used at time 0, load block at 1008b000
+total miss: 78
+large file is good
+
+==============block usage list==============
++block at 10001000, used 79 times, last used at time 79
++block at 10002000, used 0 times, last used at time 78
++block at 1006a000, used 73 times, last used at time 79
++block at 10077000, used 24 times, last used at time 79
++block at 10086000, used 1 times, last used at time 73
++block at 10087000, used 1 times, last used at time 74
++block at 10088000, used 1 times, last used at time 75
++block at 10089000, used 2 times, last used at time 77
++block at 1008a000, used 1 times, last used at time 78
++block at 1008b000, used 1 times, last used at time 79
+++++++++++++++++++end list++++++++++++++++++
+evict block at 10086000, used 0 times, last used at time 0, load block at 10069000
+total miss: 79
+No runnable environments in the system!
+He110 World
+Welcome to the JOS kernel monitor!
+Type 'help' for a list of commands.
+K> QEMU: Terminated
+

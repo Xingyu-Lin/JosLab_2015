@@ -1,0 +1,854 @@
+make[1]: Entering directory `/home/dora/joslab'
+make[1]: `obj/fs/fs.img' is up to date.
+make[1]: Leaving directory `/home/dora/joslab'
+qemu-system-i386 -hda obj/kern/kernel.img -serial mon:stdio -gdb tcp::26000 -D qemu.log -smp 1 -hdb obj/fs/fs.img 
+6828 decimal is 15254 octal!
+Physical memory: 66556K available, base = 640K, extended = 65532K
+ok!check_page_free_list passed!
+check_page_alloc() succeeded!
+check_page() succeeded!
+check_kern_pgdir() succeeded!
+ok!check_page_free_list passed!
+check_page_installed_pgdir() succeeded!
+SMP: CPU 0 found 1 CPU(s)
+enabled interrupts: 1 2 4
+FS is running
+FS can do I/O
+Device 1 presence: 1
+
+==============block usage list==============
+++++++++++++++++++end list++++++++++++++++++
+load block at 10001000, no eviction
+superblock is good
+
+==============block usage list==============
++block at 10001000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10002000, no eviction
+bitmap is good
+alloc_block is good
+
+==============block usage list==============
++block at 10001000, used 2 times
++block at 10002000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10069000, no eviction
+
+==============block usage list==============
++block at 10001000, used 3 times
++block at 10002000, used 1 times
++block at 10069000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006a000, no eviction
+file_open is good
+
+==============block usage list==============
++block at 10001000, used 4 times
++block at 10002000, used 1 times
++block at 10069000, used 2 times
++block at 1006a000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10003000, no eviction
+file_get_block is good
+file_flush is good
+file_truncate is good
+file rewrite is good
+serve_open is good
+file_stat is good
+file_read is good
+file_close is good
+stale fileid is good
+
+==============block usage list==============
++block at 10001000, used 5 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 3 times
++block at 1006a000, used 2 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006c000, no eviction
+file_write is good
+file_read after file_write is good
+open is good
+
+==============block usage list==============
++block at 10001000, used 6 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 3 times
++block at 1006c000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006d000, no eviction
+
+==============block usage list==============
++block at 10001000, used 7 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 4 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006e000, no eviction
+
+==============block usage list==============
++block at 10001000, used 8 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 5 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1006f000, no eviction
+
+==============block usage list==============
++block at 10001000, used 9 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 6 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10070000, no eviction
+
+==============block usage list==============
++block at 10001000, used 10 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 7 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10071000, no eviction
+
+==============block usage list==============
++block at 10001000, used 11 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 8 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10072000, no eviction
+
+==============block usage list==============
++block at 10001000, used 12 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 9 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10073000, no eviction
+
+==============block usage list==============
++block at 10001000, used 13 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 10 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10074000, no eviction
+
+==============block usage list==============
++block at 10001000, used 14 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 11 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10075000, no eviction
+
+==============block usage list==============
++block at 10001000, used 15 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 12 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10076000, no eviction
+
+==============block usage list==============
++block at 10001000, used 16 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 13 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10077000, no eviction
+
+==============block usage list==============
++block at 10001000, used 17 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 13 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10078000, no eviction
+
+==============block usage list==============
++block at 10001000, used 18 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 14 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 2 times
++block at 10078000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10079000, no eviction
+
+==============block usage list==============
++block at 10001000, used 19 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 15 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 3 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1007a000, no eviction
+
+==============block usage list==============
++block at 10001000, used 20 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 16 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 4 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1007b000, no eviction
+
+==============block usage list==============
++block at 10001000, used 21 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 17 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 5 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1007c000, no eviction
+
+==============block usage list==============
++block at 10001000, used 22 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 18 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 6 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1007d000, no eviction
+
+==============block usage list==============
++block at 10001000, used 23 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 19 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 7 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1007e000, no eviction
+
+==============block usage list==============
++block at 10001000, used 24 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 20 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 8 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1007f000, no eviction
+
+==============block usage list==============
++block at 10001000, used 25 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 21 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 9 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10080000, no eviction
+
+==============block usage list==============
++block at 10001000, used 26 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 22 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 10 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10081000, no eviction
+
+==============block usage list==============
++block at 10001000, used 27 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 23 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 11 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10082000, no eviction
+
+==============block usage list==============
++block at 10001000, used 28 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 24 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 12 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10083000, no eviction
+
+==============block usage list==============
++block at 10001000, used 29 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 25 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 13 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
++block at 10083000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10084000, no eviction
+
+==============block usage list==============
++block at 10001000, used 30 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 26 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 14 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
++block at 10083000, used 1 times
++block at 10084000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10085000, no eviction
+
+==============block usage list==============
++block at 10001000, used 31 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 27 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 15 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
++block at 10083000, used 1 times
++block at 10084000, used 1 times
++block at 10085000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10086000, no eviction
+
+==============block usage list==============
++block at 10001000, used 32 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 28 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 16 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
++block at 10083000, used 1 times
++block at 10084000, used 1 times
++block at 10085000, used 1 times
++block at 10086000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10087000, no eviction
+
+==============block usage list==============
++block at 10001000, used 33 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 29 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 17 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
++block at 10083000, used 1 times
++block at 10084000, used 1 times
++block at 10085000, used 1 times
++block at 10086000, used 1 times
++block at 10087000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10088000, no eviction
+
+==============block usage list==============
++block at 10001000, used 34 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 30 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 18 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
++block at 10083000, used 1 times
++block at 10084000, used 1 times
++block at 10085000, used 1 times
++block at 10086000, used 1 times
++block at 10087000, used 1 times
++block at 10088000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 10089000, no eviction
+
+==============block usage list==============
++block at 10001000, used 35 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 31 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 19 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
++block at 10083000, used 1 times
++block at 10084000, used 1 times
++block at 10085000, used 1 times
++block at 10086000, used 1 times
++block at 10087000, used 1 times
++block at 10088000, used 1 times
++block at 10089000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1008a000, no eviction
+
+==============block usage list==============
++block at 10001000, used 36 times
++block at 10002000, used 1 times
++block at 10003000, used 1 times
++block at 10069000, used 4 times
++block at 1006a000, used 32 times
++block at 1006c000, used 1 times
++block at 1006d000, used 1 times
++block at 1006e000, used 1 times
++block at 1006f000, used 1 times
++block at 10070000, used 1 times
++block at 10071000, used 1 times
++block at 10072000, used 1 times
++block at 10073000, used 1 times
++block at 10074000, used 1 times
++block at 10075000, used 1 times
++block at 10076000, used 1 times
++block at 10077000, used 20 times
++block at 10078000, used 1 times
++block at 10079000, used 1 times
++block at 1007a000, used 1 times
++block at 1007b000, used 1 times
++block at 1007c000, used 1 times
++block at 1007d000, used 1 times
++block at 1007e000, used 1 times
++block at 1007f000, used 1 times
++block at 10080000, used 1 times
++block at 10081000, used 1 times
++block at 10082000, used 1 times
++block at 10083000, used 1 times
++block at 10084000, used 1 times
++block at 10085000, used 1 times
++block at 10086000, used 1 times
++block at 10087000, used 1 times
++block at 10088000, used 1 times
++block at 10089000, used 1 times
++block at 1008a000, used 1 times
+++++++++++++++++++end list++++++++++++++++++
+load block at 1008b000, no eviction
+large file is good
+No runnable environments in the system!
+He110 World
+Welcome to the JOS kernel monitor!
+Type 'help' for a list of commands.
+K> QEMU: Terminated
+

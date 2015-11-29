@@ -409,6 +409,19 @@ sys_exec(uint32_t eip, uint32_t esp, void * v_ph, uint32_t phnum)
     return 0;
 }
 
+static int
+sys_ptea_flush()
+{
+        void* va;
+        pte_t* pte;
+        for (va=0; va!=(void*)0xfffff000; va+=PGSIZE)
+        {
+            pte = pgdir_walk(curenv->env_pgdir, va, 0);
+            if (pte ==NULL) continue;
+            *pte = (*pte) & ~PTE_A;
+        }
+        return 0;
+}
 // Dispatches to the correct kernel function, passing the arguments.
 int32_t
 syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, uint32_t a5)
@@ -461,9 +474,12 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
     case SYS_env_set_trapframe:
         ret = sys_env_set_trapframe((envid_t) a1, (struct Trapframe*)a2);
         break;
-    case SYS_exec:
-	ret = sys_exec((uint32_t)a1, (uint32_t)a2, (void *)a3, (uint32_t)a4);
-	break;
+    //case SYS_exec:
+	  //  ret = sys_exec((uint32_t)a1, (uint32_t)a2, (void *)a3, (uint32_t)a4);
+	  //  break;
+    case SYS_ptea_flush:
+        ret = sys_ptea_flush();
+        break;
     default:
 		return -E_INVAL;
 	}

@@ -1,6 +1,9 @@
 
 #include "fs.h"
-
+#include "inc/lib.h"
+#include "lib/syscall.c"
+#define MAXFILECACHE (1 * 10* PGSIZE)    //1M, max size of memory for disk mapping
+#define MAXBLK (DISKSIZE/BLKSIZE)
 // Return the virtual address of this disk block.
 void*
 diskaddr(uint32_t blockno)
@@ -24,6 +27,54 @@ va_is_dirty(void *va)
 	return (uvpt[PGNUM(va)] & PTE_D) != 0;
 }
 
+static struct blk_list
+{
+        uint32_t count;
+        uint32_t tstamp;
+        bool valid;
+} plist[MAXBLK];
+
+static void update_blk_count()
+{
+        int i;
+        void* va = (void*)DISKMAP;
+        for (i=0; i<MAXBLK; ++i)
+        {
+                if (plist[i].valid)
+                {
+                        if (uvpt[PGNUM(va)] & PTE_A) plist[i].count++;
+                }
+                va += BLKSIZE;
+        }
+}
+
+static uint32_t timestamp = 0;
+static void update_time_stamp()
+{
+        int i;
+        void* va = (void*)DISKMAP;
+        for (i=0; i<MAXBLK; ++i)
+        {
+                if (plist[i].valid)
+                {
+                        if (uvpt[PGNUM(va)] & PTE_A) plist[i].tstamp = timestamp;
+                }
+                va += BLKSIZE;
+        }
+}
+
+static void print_block_list()
+{
+       cprintf("\n");
+       cprintf("==============block usage list==============\n");
+       int i;
+       for (i=0; i<MAXBLK; ++i)
+               if (plist[i].valid)
+                    cprintf("+block at %x, used %d times, last used at time %d\n", diskaddr(i), plist[i].count, plist[i].tstamp);
+       cprintf("++++++++++++++++++end list++++++++++++++++++\n");
+}
+
+static uint32_t curr_disk_size = 0;
 // Fault any disk block that is read in to memory by
 // loading it from disk.
 static void
@@ -49,7 +100,33 @@ bc_pgfault(struct UTrapframe *utf)
 	//
 	// LAB 5: you code here:
     addr = ROUNDDOWN(addr, PGSIZE);
-    if ((r = sys_page_alloc(0, addr, PTE_SYSCALL)) <0)  //out of memery, why painc?
+    update_blk_count();
+    update_time_stamp();
+    //print_block_list();
+    if (curr_disk_size == MAXFILECACHE) //no memory for disk mapping, have to evict
+    {
+            uint32_t i, min_blk = 0, min_count = 0xffffffff;
+            for (i=0; i<MAXBLK; ++i)
+            if (plist[i].valid && plist[i].count<min_count && i!=1) 
+            //use LRU policy to evict a block
+            {
+                    assert(i!=blockno);
+                    min_blk = i;
+                    min_count = plist[i].count;
+            }
+            flush_block(diskaddr(min_blk));
+            curr_disk_size -=PGSIZE;
+            plist[min_blk].valid =0;
+            sys_page_unmap(0, diskaddr(min_blk));
+      //      cprintf("evict block at %x, used %d times, last used at time %x, load block at %x\n",
+      //                      diskaddr(min_blk), plist[min_count].count, plist[min_count].tstamp, addr);
+    } else 
+    {
+      //      cprintf("load block at %x, no eviction\n", addr);
+    }
+    cprintf("total miss: %d\n", timestamp);
+    curr_disk_size += PGSIZE;
+    if ((r = sys_page_alloc(0, addr, PTE_SYSCALL)) <0) 
             panic("in bc_pgfault, sys_page_alloc: %e", r);
     if ((r = ide_read(blockno * BLKSECTS, addr, BLKSECTS)) < 0)
             panic("in bc_pgfault, ideread: %e", r);
@@ -57,12 +134,15 @@ bc_pgfault(struct UTrapframe *utf)
 	// block from disk
 	if ((r = sys_page_map(0, addr, 0, addr, uvpt[PGNUM(addr)] & PTE_SYSCALL)) < 0)
 		panic("in bc_pgfault, sys_page_map: %e", r);
-
+    plist[blockno].valid = 1;
+    plist[blockno].count = 0;
+    plist[blockno].tstamp = ++timestamp;
 	// Check that the block we read was allocated. (exercise for
 	// the reader: why do we do this *after* reading the block
 	// in?)
 	if (bitmap && block_is_free(blockno))
 		panic("reading free block %08x\n", blockno);
+    sys_ptea_flush();
 }
 
 // Flush the contents of the block containing VA out to disk if
@@ -126,7 +206,7 @@ bc_init(void)
 {
 	struct Super super;
 	set_pgfault_handler(bc_pgfault);
-	check_bc();
+	//check_bc();
 
 	// cache the super block by reading it once
 	memmove(&super, diskaddr(1), sizeof super);

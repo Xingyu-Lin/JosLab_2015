@@ -145,7 +145,7 @@ error:
 	close(fd);
 	return r;
 }
-
+/*
 int
 exec(const char *prog, const char **argv)
 {
@@ -231,7 +231,7 @@ execl(const char *prog, const char *arg0, ...)
 		argv[i+1] = va_arg(vl, const char *);
 	va_end(vl);
 	return exec(prog, argv);
-}
+}*/
 
 int
 spawnl(const char *prog, const char *arg0, ...)
