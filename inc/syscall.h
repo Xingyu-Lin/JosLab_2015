@@ -17,7 +17,8 @@ enum {
 	SYS_yield,
 	SYS_ipc_try_send,
 	SYS_ipc_recv,
-    SYS_exec,
+    //SYS_exec,
+    SYS_ptea_flush,
     NSYSCALLS
 };
 
