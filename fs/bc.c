@@ -2,7 +2,7 @@
 #include "fs.h"
 #include "inc/lib.h"
 #include "lib/syscall.c"
-#define MAXFILECACHE (1 * 10* PGSIZE)    //1M, max size of memory for disk mapping
+#define MAXFILECACHE (1 * 2* PGSIZE)    //1M, max size of memory for disk mapping
 #define MAXBLK (DISKSIZE/BLKSIZE)
 // Return the virtual address of this disk block.
 void*
@@ -102,7 +102,8 @@ bc_pgfault(struct UTrapframe *utf)
     addr = ROUNDDOWN(addr, PGSIZE);
     update_blk_count();
     update_time_stamp();
-    print_block_list();
+    //print_block_list();
+    int tmp=1;
     if (curr_disk_size == MAXFILECACHE) //no memory for disk mapping, have to evict
     {
             uint32_t i, min_blk = 0, min_count = 0xffffffff;
@@ -114,6 +115,16 @@ bc_pgfault(struct UTrapframe *utf)
                     min_blk = i;
                     min_count = plist[i].tstamp;
             }
+            /*
+            if (plist[i].valid && plist[i].count<min_count && plist[i].count >1 && i!=1)
+            //use LFU policy to evict a block
+            {
+                    assert(i!=blockno);
+                    min_blk = i;
+                    min_count = plist[i].count;
+            } else if (plist[i].valid && plist[i].count< min_count && i!=1 && plist[i].count<=2) tmp = i;
+            if (min_count == 0xffffffff) {min_blk = tmp; min_count = plist[tmp].count;}
+            */
             cprintf("evict block at %x, used %d times, last used at time %x, load block at %x\n",
                             diskaddr(min_blk), plist[min_blk].count, plist[min_blk].tstamp, addr);
             flush_block(diskaddr(min_blk));
@@ -206,7 +217,7 @@ bc_init(void)
 {
 	struct Super super;
 	set_pgfault_handler(bc_pgfault);
-	check_bc();
+	//check_bc();
 
 	// cache the super block by reading it once
 	memmove(&super, diskaddr(1), sizeof super);
